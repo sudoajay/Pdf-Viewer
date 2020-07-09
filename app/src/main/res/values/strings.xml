@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Pdf Viewer</string>
+
+    <!--    Dark Mode Bottom Sheet-->
+    <string name="off_trans_text">Off</string>
+    <string name="on_trans_text">On</string>
+    <string name="automatic_at_sunset_trans_text">Automatic at sunset</string>
+    <string name="set_by_battery_saver_trans_text">Set by battery saver</string>
+    <string name="system_default_trans_text">System Default</string>
+
+    <!--  MainActivity  Bottom Toolbar-->
+    <string name="action_search">Search</string>
+    <string name="action_more_option">More Option</string>
+
+    <!--        No Trans-->
+
+    <!--    Dark Mode Not Trans-->
+
+    <string name="dark_mode_text" translatable="false">Dark Mode</string>
+    <string name="is_dark_mode_text" translatable="false">isDarkMode</string>
+    <string name="off_text" translatable="false">Off</string>
+    <string name="on_text" translatable="false">On</string>
+    <string name="automatic_at_sunset_text" translatable="false">Automatic at sunset</string>
+    <string name="set_by_battery_saver_text" translatable="false">Set by battery saver</string>
+    <string name="system_default_text" translatable="false">System Default</string>
+</resources>

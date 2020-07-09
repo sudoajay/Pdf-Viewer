@@ -1,0 +1,27 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+<!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+<!--        <item name="android:statusBarColor">?attr/mainBackgroundColor</item>-->
+
+
+<!--        Modified Attr for Dark Mode Effect-->
+        <item name="primaryAppColor" >@color/primaryAppColor</item>
+        <item name="mainBgColor">@color/mainBgColor</item>
+        <item name="headingNormalTextColor">@color/headingNormalTextColor</item>
+        <item name="fadeTextColor">@color/fadeTextColor</item>
+        <item name="bgBoxColor">@color/bgBoxColor</item>
+        <item name="bottomItemTintColor">@color/bottomItemTintColor</item>
+
+
+
+
+    </style>
+
+</resources>
