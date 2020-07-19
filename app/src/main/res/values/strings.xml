@@ -12,10 +12,31 @@
     <string name="action_search">Search</string>
     <string name="action_more_option">More Option</string>
 
+    <!-- callPermissionDialog (External Storage Permission)-->
+    <string name="activity_custom_dialog_permission_TextView1">App Permission</string>
+    <string name="activity_custom_dialog_permission_TextView2">In Android 6+ Apps will ask for
+        permission once you start using them.</string>
+    <string name="readMoreButton">Read More</string>
+    <string name="continueButton">Continue</string>
+    <string name="reportIt">There is Error Please Report It</string>
+    <string name="selectExternalMes">Only Select the Internal Card Directory</string>
+    <string name="giveUsPermission">Give us permission for further process</string>
+
+
+    <!--   callPermissionDialog (Sd Card Storage Permission)  -->
+    <string name="selectSdCardMes">Only Select the Sd Card Directory</string>
+    <string name="wrongDirectorySelected">You select the wrong directory</string>
+    <string name="supportAboveSdCard">Sorry , We don\'t support sd card at this android version </string>
+
+
+<!--    Delete Cache-->
+    <string name="successfully_cache_data_is_deleted_text">Successfully Cache Data Is Deleted</string>
+
+
+
     <!--        No Trans-->
 
-    <!--    Dark Mode Not Trans-->
-
+    <!--    Dark Mode No Trans-->
     <string name="dark_mode_text" translatable="false">Dark Mode</string>
     <string name="is_dark_mode_text" translatable="false">isDarkMode</string>
     <string name="off_text" translatable="false">Off</string>
@@ -23,4 +44,11 @@
     <string name="automatic_at_sunset_text" translatable="false">Automatic at sunset</string>
     <string name="set_by_battery_saver_text" translatable="false">Set by battery saver</string>
     <string name="system_default_text" translatable="false">System Default</string>
+
+<!--    External Storage & Sd Card Storage No Trans-->
+    <string name="external_path_text" translatable="false">External Path</string>
+    <string name="external_uri_text" translatable="false">External Uri</string>
+    <string name="sdCard_path_text" translatable="false">SdCard Path</string>
+    <string name="sdCard_uri_text" translatable="false">SdCard Uri</string>
+
 </resources>

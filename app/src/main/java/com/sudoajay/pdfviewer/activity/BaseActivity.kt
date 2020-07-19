@@ -18,12 +18,13 @@ open class BaseActivity : AppCompatActivity() {
     private lateinit var currentTheme: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         currentTheme =
             getDarkMode(
                 applicationContext
             )
         setAppTheme(currentTheme)
-
 
     }
 
@@ -33,7 +34,6 @@ open class BaseActivity : AppCompatActivity() {
             getDarkMode(
                 applicationContext
             )
-        Log.e("DarkMode", currentTheme + theme)
         if (currentTheme != theme)
             recreate()
     }

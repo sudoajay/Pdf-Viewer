@@ -7,4 +7,8 @@
     <dimen name="progress_circular_dimension">48dp</dimen>
 
 
+<!--    Insert Divider-->
+    <dimen name="divider_height">0.8dp</dimen>
+
+
 </resources>
