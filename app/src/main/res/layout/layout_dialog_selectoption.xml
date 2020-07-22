@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/mainBgColor"
-        android:paddingBottom="32dp">
+        android:paddingBottom="@dimen/bootom_sheet_padding_bottom">
 
         <View
             android:id="@+id/view"

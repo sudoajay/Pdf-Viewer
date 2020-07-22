@@ -37,6 +37,14 @@
     <string name="scan_file_trans_text">Scan File</string>
     <string name="select_file_trans_text">Select File</string>
 
+<!--    Filter Pdf Bottom Sheet -->
+    <string name="filter_option_text">Filter Option</string>
+    <string name="title_menu_order_by_trans">Order by</string>
+    <string name="menu_alphabetical_order_trans">Alphabetical order</string>
+    <string name="menu_installation_date_trans">Installation date</string>
+    <string name="menu_most_used_trans">Most Used</string>
+    <string name="menu_size_order_trans">Size Order</string>
+
 
     <!--    Web View-->
     <!--    Error When Opening Url -->
@@ -74,6 +82,13 @@
     <string name="scan_file_text" translatable="false">Scan File</string>
     <string name="select_file_text" translatable="false">Select File</string>
 
+
+    <!--    Filter Pdf Bottom Sheet -->
+    <string name="title_menu_order_by" translatable="false">Order by</string>
+    <string name="menu_alphabetical_order" translatable="false">Alphabetical order</string>
+    <string name="menu_installation_date" translatable="false">Installation date</string>
+    <string name="menu_most_used" translatable="false">Most Used</string>
+    <string name="menu_size_order" translatable="false">Size order</string>
 
 
 </resources>

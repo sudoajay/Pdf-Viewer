@@ -69,15 +69,15 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             AndroidExternalStoragePermission(applicationContext, this)
         //        Take Permission
 
-        showSelectOption()
-//        if (!androidExternalStoragePermission.isExternalStorageWritable
-//            && SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select)
-//        ) {
-//            showSelectOption()
-//            Log.e(TAG, "No isExternalStorageWritable")
-//        } else {
-//            Log.e(TAG, "Yes isExternalStorageWritable")
-//        }
+        if (!androidExternalStoragePermission.isExternalStorageWritable
+            && SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)
+        ) {
+            showSelectOption()
+            Log.e(TAG, "No isExternalStorageWritable")
+        } else {
+            Log.e(TAG, "Yes isExternalStorageWritable")
+
+        }
     }
 
     private fun setReference() {
@@ -105,13 +105,18 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         }
 
         setSupportActionBar(binding.bottomAppBar)
+
+
+        binding.filterFloatingActionButton.setOnClickListener {
+            showFilterOption()
+        }
     }
 
     private fun showDarkMode() {
         val darkModeBottomSheet = DarkModeBottomSheet(MainActivity::class.java.simpleName)
         darkModeBottomSheet.show(
             supportFragmentManager.beginTransaction(),
-            "darkModeBottomSheet"
+            darkModeBottomSheet.tag
         )
 
     }
@@ -120,9 +125,14 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         val selectOptionBottomSheet = SelectOptionBottomSheet()
         selectOptionBottomSheet.show(
             supportFragmentManager.beginTransaction(),
-            "selectOptionBottomSheet"
+            selectOptionBottomSheet.tag
         )
 
+    }
+
+    private fun showFilterOption(){
+        val filterPdfBottomSheet = FilterPdfBottomSheet()
+        filterPdfBottomSheet.show(supportFragmentManager, filterPdfBottomSheet.tag)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -303,13 +313,17 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
 
-    override fun handleDialogClose() {
-        if (SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)) {
-            Log.e(TAG, "select_file_text Option Click")
-            openFilePicker()
+    override fun handleDialogClose(value: String) {
+        if (value == getString(R.string.select_option_text)) {
+            if (SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)) {
+                Log.e(TAG, "select_file_text Option Click")
+                openFilePicker()
+            } else {
+                Log.e(TAG, "scan_file_text Option Click")
+                androidExternalStoragePermission.callPermission()
+            }
         } else {
-            Log.e(TAG, "scan_file_text Option Click")
-            androidExternalStoragePermission.callPermission()
+
         }
     }
 
@@ -319,7 +333,12 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         // Set your required file type
         intent.type = "application/pdf"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.select_pdf_file_text)), requestCode)
+        startActivityForResult(
+            Intent.createChooser(
+                intent,
+                getString(R.string.select_pdf_file_text)
+            ), requestCode
+        )
     }
 
     private fun copyingPdfFile(fileUri: Uri?) {

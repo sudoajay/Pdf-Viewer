@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="android.os.Build.VERSION"/>
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
+
         <variable
             name="bottomSheet"
-            type="com.sudoajay.pdfviewer.helper.DarkModeBottomSheet" />
+            type="com.sudoajay.pdfviewer.activity.mainActivity.FilterPdfBottomSheet" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/mainBgColor"
         android:paddingBottom="@dimen/bootom_sheet_padding_bottom">
 
@@ -29,11 +29,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/ShowBy_TextView"
+            android:id="@+id/filterOption_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/dark_mode_text"
+            android:text="@string/filter_option_text"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="?attr/headingNormalTextColor"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -41,242 +43,203 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/off_ConstraintLayout"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/orderBy_TextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:text="@string/title_menu_order_by_trans"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="?attr/headingNormalTextColor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filterOption_TextView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/alphabeticalOrder_ConstraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue(@string/off_text)}"
+            android:onClick="@{() -> bottomSheet.setValue(@string/menu_alphabetical_order)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ShowBy_TextView">
+            app:layout_constraintTop_toBottomOf="@+id/orderBy_TextView">
 
             <TextView
-                android:id="@+id/off_TextView"
+                android:id="@+id/alphabeticalOrder_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/off_trans_text"
+                android:text="@string/menu_alphabetical_order_trans"
                 android:textColor="?attr/headingNormalTextColor"
-                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/off_ImageView"
+                app:layout_constraintEnd_toStartOf="@+id/alphabeticalOrder_ImageView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/off_ImageView"
+                android:id="@+id/alphabeticalOrder_ImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:visibility="@{(bottomSheet.getValue().equals(@string/off_text))  ?  View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/off_TextView"
+                android:layout_marginEnd="24dp"
+                android:visibility="@{bottomSheet.isValue(@string/menu_alphabetical_order)   ?  View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/alphabeticalOrder_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/off_TextView"
+                app:layout_constraintTop_toTopOf="@+id/alphabeticalOrder_TextView"
                 app:srcCompat="@drawable/ic_tick"
                 tools:ignore="ContentDescription"
                 app:tint="?attr/fadeTextColor" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/on_ConstraintLayout"
+            android:id="@+id/installationDate_ConstraintLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue(@string/on_text)}"
+            android:onClick="@{() -> bottomSheet.setValue(@string/menu_installation_date)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/off_ConstraintLayout">
+            app:layout_constraintTop_toBottomOf="@+id/alphabeticalOrder_ConstraintLayout">
 
             <TextView
-                android:id="@+id/on_TextView"
+                android:id="@+id/installationDate_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/on_trans_text"
+                android:text="@string/menu_installation_date_trans"
                 android:textColor="?attr/headingNormalTextColor"
-                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/on_ImageView"
+                app:layout_constraintEnd_toStartOf="@+id/installationDate_ImageView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/on_ImageView"
+                android:id="@+id/installationDate_ImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:visibility="@{(bottomSheet.getValue().equals(@string/on_text))  ?  View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/on_TextView"
+                android:layout_marginEnd="24dp"
+                android:visibility="@{bottomSheet.isValue(@string/menu_installation_date)  ?  View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/installationDate_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/on_TextView"
-                app:layout_constraintVertical_bias="0.261"
-                app:srcCompat="@drawable/ic_tick"
-                app:tint="?attr/fadeTextColor"
-                tools:ignore="ContentDescription" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/automatic_ConstraintLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
-            android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue(@string/automatic_at_sunset_text)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/on_ConstraintLayout">
-
-            <TextView
-                android:id="@+id/automatic_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/automatic_at_sunset_trans_text"
-                android:textColor="?attr/headingNormalTextColor"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/automatic_ImageView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/automatic_ImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:visibility="@{(bottomSheet.getValue().equals(@string/automatic_at_sunset_text))  ?  View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/automatic_TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/automatic_TextView"
+                app:layout_constraintTop_toTopOf="@+id/installationDate_TextView"
                 app:layout_constraintVertical_bias="0.261"
                 app:srcCompat="@drawable/ic_tick"
                 tools:ignore="ContentDescription"
                 app:tint="?attr/fadeTextColor" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/batterySaver_ConstraintLayout"
+            android:id="@+id/systemApps_ConstraintLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:visibility="@{VERSION.SDK_INT >= 21 ? View.VISIBLE : View.GONE}"
+            android:onClick="@{() -> bottomSheet.setValue(@string/menu_most_used)}"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue(@string/set_by_battery_saver_text)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/automatic_ConstraintLayout">
+            app:layout_constraintTop_toBottomOf="@+id/installationDate_ConstraintLayout">
 
             <TextView
-                android:id="@+id/batterySave_TextView"
+                android:id="@+id/systemApps_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/set_by_battery_saver_trans_text"
+                android:text="@string/menu_most_used_trans"
                 android:textColor="?attr/headingNormalTextColor"
-                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/batterySaver_ImageView"
+                app:layout_constraintEnd_toStartOf="@+id/systemApps_ImageView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
-                android:id="@+id/batterySaver_ImageView"
+                android:id="@+id/systemApps_ImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:visibility="@{(bottomSheet.getValue().equals(@string/set_by_battery_saver_text))  ?  View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/batterySave_TextView"
+                android:layout_marginEnd="24dp"
+                android:visibility="@{bottomSheet.isValue(@string/menu_most_used)  ?  View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/systemApps_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/batterySave_TextView"
-                app:layout_constraintVertical_bias="0.261"
-                app:srcCompat="@drawable/ic_tick"
-                app:tint="?attr/fadeTextColor"
-                tools:ignore="ContentDescription" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/systemDefault_ConstraintLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
-            android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue(@string/system_default_text)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/batterySaver_ConstraintLayout">
-
-            <TextView
-                android:id="@+id/systemDefault_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/system_default_trans_text"
-                android:textColor="?attr/headingNormalTextColor"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/systemDefault_ImageView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/systemDefault_ImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:visibility="@{(bottomSheet.getValue().equals(@string/system_default_text))  ?  View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/systemDefault_TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/systemDefault_TextView"
-                app:layout_constraintVertical_bias="0.261"
+                app:layout_constraintTop_toTopOf="@+id/systemApps_TextView"
                 app:srcCompat="@drawable/ic_tick"
                 tools:ignore="ContentDescription"
                 app:tint="?attr/fadeTextColor" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userApps_ConstraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:background="?selectableItemBackground"
+            android:onClick="@{() -> bottomSheet.setValue(@string/menu_size_order)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/systemApps_ConstraintLayout">
+
+            <TextView
+                android:id="@+id/userApps_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/menu_size_order_trans"
+                android:textColor="?attr/headingNormalTextColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/userApps_ImageView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/userApps_ImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:visibility="@{bottomSheet.isValue(@string/menu_size_order)  ?  View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/userApps_TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/userApps_TextView"
+                app:srcCompat="@drawable/ic_tick"
+                tools:ignore="ContentDescription"
+                app:tint="?attr/fadeTextColor" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

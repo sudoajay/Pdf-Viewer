@@ -13,6 +13,7 @@
     <dimen name="text_view_margin_gap">12dp</dimen>
     <dimen name="gap_margin_left_right">16dp</dimen>
     <dimen name="web_view_frame_layout_height">8dp</dimen>
+    <dimen name="bootom_sheet_padding_bottom">32dp</dimen>
 
 
 </resources>

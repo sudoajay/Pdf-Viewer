@@ -18,7 +18,7 @@ class SelectOptionBottomSheet : BottomSheetDialogFragment() {
     private var isSelectedBottomSheetFragment: IsSelectedBottomSheetFragment? = null
 
     interface IsSelectedBottomSheetFragment {
-        fun handleDialogClose()
+        fun handleDialogClose(value: String)
 
     }
 
@@ -47,7 +47,7 @@ class SelectOptionBottomSheet : BottomSheetDialogFragment() {
                 getString(R.string.select_option_text), value
             ).apply()
 
-        isSelectedBottomSheetFragment!!.handleDialogClose()
+        isSelectedBottomSheetFragment!!.handleDialogClose(getString(R.string.select_option_text))
         dismiss()
     }
 
