@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_search"
+        android:title="@string/search_menuItem"
+        android:icon="@drawable/search_icon"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:orderInCategory="1"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+
+<!--    <item-->
+<!--        android:id="@+id/sort_optionMenu"-->
+<!--        android:title="@string/sort_optionMenu"-->
+<!--        android:visible="true"-->
+<!--        android:enabled="true"-->
+<!--        app:showAsAction="never">-->
+<!--        <menu>-->
+<!--            <group-->
+<!--                android:id="@+id/group"-->
+<!--                android:checkableBehavior="single">-->
+<!--                <item-->
+<!--                    android:id="@+id/sort_name_optionMenu"-->
+<!--                    android:title="@string/sort_name_optionMenu" />-->
+<!--                <item-->
+<!--                    android:id="@+id/sort_date_optionMenu"-->
+<!--                    android:checked="true"-->
+<!--                    android:title="@string/sort_date_optionMenu" />-->
+<!--                <item-->
+<!--                    android:id="@+id/sort_size_optionMenu"-->
+<!--                    android:title="@string/sort_size_optionMenu" />-->
+<!--            </group>-->
+<!--        </menu>-->
+<!--    </item>-->
+
+    <item
+        android:id="@+id/refresh_optionMenu"
+        android:title="@string/refresh_optionMenu" />
+    <item
+        android:id="@+id/filePicker_optionMenu"
+        android:title="@string/filePicker_optionMenu" />
+    <item
+        android:id="@+id/clearCache_optionMenu"
+        android:title="@string/clearCache_optionMenu" />
+
+    <item
+        android:id="@+id/more_optionMenu"
+        android:enabled="true"
+        android:title="@string/more_optionMenu"
+        android:visible="true"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/more_sendFeedback_optionMenu"
+                android:title="@string/more_sendFeedback_optionMenu" />
+            <item
+                android:id="@+id/more_rateUs_optionMenu"
+                android:title="@string/more_rateUs_optionMenu" />
+            <item
+                android:id="@+id/sort_shareApp_optionMenu"
+                android:title="@string/sort_shareApp_optionMenu" />
+            <item
+                android:id="@+id/sort_moreApp_optionMenu"
+                android:title="@string/sort_moreApp_optionMenu" />
+
+        </menu>
+    </item>
+
+</menu>
