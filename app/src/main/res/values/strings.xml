@@ -29,9 +29,26 @@
     <string name="supportAboveSdCard">Sorry , We don\'t support sd card at this android version </string>
 
 
-<!--    Delete Cache-->
+    <!--    Delete Cache-->
     <string name="successfully_cache_data_is_deleted_text">Successfully Cache Data Is Deleted</string>
 
+    <!--    BottomSheetDialog select option-->
+    <string name="select_option_trans_text">Select Option</string>
+    <string name="scan_file_trans_text">Scan File</string>
+    <string name="select_file_trans_text">Select File</string>
+
+
+    <!--    Web View-->
+    <!--    Error When Opening Url -->
+    <string name="error_text">Error ! Please try to submit the error</string>
+
+<!--    Open file-->
+    <string name="cannot_open_file_chooser_text">Cannot Open File Chooser</string>
+    <string name="select_pdf_file_text">Select Pdf File</string>
+    <string name="failed_to_open_file_text">Failed to open file</string>
+
+<!--    Download File-->
+    <string name="downloading_not_suppoted_text">Download option is not supported</string>
 
 
     <!--        No Trans-->
@@ -45,10 +62,18 @@
     <string name="set_by_battery_saver_text" translatable="false">Set by battery saver</string>
     <string name="system_default_text" translatable="false">System Default</string>
 
-<!--    External Storage & Sd Card Storage No Trans-->
+    <!--    External Storage & Sd Card Storage No Trans-->
     <string name="external_path_text" translatable="false">External Path</string>
     <string name="external_uri_text" translatable="false">External Uri</string>
     <string name="sdCard_path_text" translatable="false">SdCard Path</string>
     <string name="sdCard_uri_text" translatable="false">SdCard Uri</string>
+
+
+    <!--    BottomSheetDialog select option-->
+    <string name="select_option_text" translatable="false">Select Option</string>
+    <string name="scan_file_text" translatable="false">Scan File</string>
+    <string name="select_file_text" translatable="false">Select File</string>
+
+
 
 </resources>

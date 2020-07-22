@@ -8,12 +8,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.os.Handler
 import androidx.core.app.ActivityCompat
 import androidx.documentfile.provider.DocumentFile
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.BaseActivity
 import com.sudoajay.pdfviewer.helper.CustomToast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class AndroidExternalStoragePermission(
@@ -25,8 +28,8 @@ class AndroidExternalStoragePermission(
     fun callPermission() { // check if permission already given or not
         if (!isExternalStorageWritable) {
             //  Here use of DocumentFile in android 10 not File is using anymore
-            val handler = Handler()
-            handler.postDelayed({
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(500)
                 if (Build.VERSION.SDK_INT <= 28) {
                     callPermissionDialog()
                 } else {
@@ -34,7 +37,7 @@ class AndroidExternalStoragePermission(
 
                     storageAccessFrameWork()
                 }
-            }, 500)
+            }
         }
     }
 

@@ -1,12 +1,15 @@
 package com.sudoajay.pdfviewer.activity.mainActivity
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -19,22 +22,29 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.BaseActivity
+import com.sudoajay.pdfviewer.activity.showPdfViewer.ShowPdfViewer
 import com.sudoajay.pdfviewer.databinding.ActivityMainBinding
+import com.sudoajay.pdfviewer.helper.CopyFile
 import com.sudoajay.pdfviewer.helper.CustomToast
 import com.sudoajay.pdfviewer.helper.DarkModeBottomSheet
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidExternalStoragePermission
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidSdCardPermission
 import com.sudoajay.pdfviewer.helper.storagePermission.SdCardPath
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomSheetFragment {
 
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var androidExternalStoragePermission: AndroidExternalStoragePermission
     private var isDarkTheme: Boolean = false
     private val requestCode = 100
-    private var fileUri: Uri? = null
-    private var TAG = "MainActivity"
+    private var TAG = "MainActivityClass"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,19 +65,20 @@ class MainActivity : BaseActivity() {
 
         setReference()
 
-        val androidExternalStoragePermission =
+        androidExternalStoragePermission =
             AndroidExternalStoragePermission(applicationContext, this)
         //        Take Permission
-        if (androidExternalStoragePermission.isExternalStorageWritable) {
-        Log.e(TAG, "Yes isExternalStorageWritable")
-        } else {
-            androidExternalStoragePermission.callPermission()
-            Log.e(TAG, "NO isExternalStorageWritable")
 
-        }
-
+        showSelectOption()
+//        if (!androidExternalStoragePermission.isExternalStorageWritable
+//            && SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select)
+//        ) {
+//            showSelectOption()
+//            Log.e(TAG, "No isExternalStorageWritable")
+//        } else {
+//            Log.e(TAG, "Yes isExternalStorageWritable")
+//        }
     }
-
 
     private fun setReference() {
 
@@ -105,6 +116,14 @@ class MainActivity : BaseActivity() {
 
     }
 
+    private fun showSelectOption() {
+        val selectOptionBottomSheet = SelectOptionBottomSheet()
+        selectOptionBottomSheet.show(
+            supportFragmentManager.beginTransaction(),
+            "selectOptionBottomSheet"
+        )
+
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -174,9 +193,10 @@ class MainActivity : BaseActivity() {
             ) { // permission denied, boo! Disable the
 // functionality that depends on this permission.
                 CustomToast.toastIt(applicationContext, getString(R.string.giveUsPermission))
-//                mBottomSheetDialog!!.show()
-                //                if (!androidExternalStoragePermission.isExternalStorageWritable())
-//                    androidExternalStoragePermission.call_Thread();
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(500)
+                    showSelectOption()
+                }
             } else {
                 AndroidExternalStoragePermission.setExternalPath(
                     applicationContext,
@@ -200,9 +220,10 @@ class MainActivity : BaseActivity() {
         val spiltPart: String?
         if (resultCode != Activity.RESULT_OK) return
 
+//        Here I get OpenManage File
         if (this.requestCode == requestCode && data != null) {
-            fileUri = data.data
-
+            copyingPdfFile(data.data)
+            Log.e(TAG, data.data.toString() + " Get File Uri - ")
             return
         } else if (requestCode == 42 || requestCode == 58) {
             val sdCardURL: Uri? = data!!.data
@@ -241,7 +262,7 @@ class MainActivity : BaseActivity() {
 
             } else {
                 val realExternalPath =
-                    AndroidExternalStoragePermission.getExternalPath(applicationContext).toString()
+                    AndroidExternalStoragePermission.getExternalPath(applicationContext)
                 if (realExternalPath in sdCardPathURL.toString() + "/") {
                     spiltPart = "primary%3A"
                     AndroidExternalStoragePermission.setExternalPath(
@@ -282,6 +303,60 @@ class MainActivity : BaseActivity() {
     }
 
 
+    override fun handleDialogClose() {
+        if (SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)) {
+            Log.e(TAG, "select_file_text Option Click")
+            openFilePicker()
+        } else {
+            Log.e(TAG, "scan_file_text Option Click")
+            androidExternalStoragePermission.callPermission()
+        }
+    }
+
+    private fun openFilePicker() {
+        val intent = Intent()
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        // Set your required file type
+        intent.type = "application/pdf"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.select_pdf_file_text)), requestCode)
+    }
+
+    private fun copyingPdfFile(fileUri: Uri?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (fileUri != null) {
+                val cache: String = cacheDir.absolutePath
+                val fileName: String = queryName(contentResolver, fileUri)
+                val dst = File(
+                    """$cache/$fileName"""
+                )
+                Log.e(TAG, "File Dest " + dst.absolutePath.toString())
+
+                if (dst.exists()) dst.delete()
+
+
+                CopyFile.copyUri(applicationContext, fileUri, dst)
+
+                launch {
+                    val intent = Intent(applicationContext, ShowPdfViewer::class.java)
+                    intent.action = dst.absolutePath
+                    startActivity(intent)
+                }
+            }
+        }
+
+    }
+
+    @SuppressLint("Recycle")
+    private fun queryName(resolver: ContentResolver, uri: Uri?): String {
+        val returnCursor = resolver.query(uri!!, null, null, null, null)!!
+        val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        returnCursor.moveToFirst()
+        val name = returnCursor.getString(nameIndex)
+        returnCursor.close()
+        return name
+    }
+
     /**
      * Making notification bar transparent
      */
@@ -294,5 +369,4 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-
 }
