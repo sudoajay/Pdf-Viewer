@@ -7,11 +7,22 @@
         android:title="@string/action_search"
         app:iconTint="?attr/bottomItemTintColor"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always|collapseActionView" />
+        app:showAsAction="ifRoom|collapseActionView" />
+
     <item
-        android:id="@+id/bottomToolbar_settings"
-        android:icon="@drawable/ic_more_setting"
-        app:iconTint="?attr/bottomItemTintColor"
-        android:title="@string/action_more_option"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/darkMode_optionMenu"
+        android:title="@string/darkMode_optionMenu" />
+
+    <item
+        android:id="@+id/refresh_optionMenu"
+        android:title="@string/refresh_optionMenu" />
+    <item
+        android:id="@+id/filePicker_optionMenu"
+        android:title="@string/filePicker_optionMenu" />
+    <item
+        android:id="@+id/moreSetting_optionMenu"
+        android:title="@string/moreSetting_optionMenu" />
+
+
+
 </menu>

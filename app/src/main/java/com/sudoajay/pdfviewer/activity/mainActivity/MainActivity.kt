@@ -27,6 +27,7 @@ import com.sudoajay.pdfviewer.databinding.ActivityMainBinding
 import com.sudoajay.pdfviewer.helper.CopyFile
 import com.sudoajay.pdfviewer.helper.CustomToast
 import com.sudoajay.pdfviewer.helper.DarkModeBottomSheet
+import com.sudoajay.pdfviewer.helper.DeleteCache
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidExternalStoragePermission
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidSdCardPermission
 import com.sudoajay.pdfviewer.helper.storagePermission.SdCardPath
@@ -138,11 +139,15 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> showDarkMode()
-
-            R.id.bottomToolbar_settings -> {
-//                val moreFilterBottomSheet = MoreFilterAppBottomSheet()
-//                moreFilterBottomSheet.show(supportFragmentManager, moreFilterBottomSheet.tag)
-            }
+            R.id.darkMode_optionMenu -> showDarkMode()
+//            R.id.refresh_optionMenu -> clearDataBaseItem()
+//            R.id.filePicker_optionMenu -> openFileManager()
+//            R.id.more_sendFeedback_optionMenu -> openEmail()
+//            R.id.more_rateUs_optionMenu -> rateUs()
+//            R.id.sort_shareApp_optionMenu -> shareIt()
+//            R.id.sort_moreApp_optionMenu -> openMoreApp()
+            R.id.clearCache_optionMenu -> DeleteCache.deleteCache(applicationContext)
+            else -> return super.onOptionsItemSelected(item)
         }
 
         return true
