@@ -20,9 +20,6 @@
         android:id="@+id/filePicker_optionMenu"
         android:title="@string/filePicker_optionMenu" />
     <item
-        android:id="@+id/moreSetting_optionMenu"
-        android:title="@string/moreSetting_optionMenu" />
-
-
-
+        android:id="@+id/more_setting_optionMenu"
+        android:title="@string/more_setting_optionMenu" />
 </menu>

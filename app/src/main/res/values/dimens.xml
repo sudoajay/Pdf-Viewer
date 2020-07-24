@@ -15,5 +15,11 @@
     <dimen name="web_view_frame_layout_height">8dp</dimen>
     <dimen name="bootom_sheet_padding_bottom">32dp</dimen>
 
+<!--    divider_inset-->
+    <dimen name="divider_inset">72dp</dimen>
+
+<!--    Recycler View -->
+    <dimen name="image_dimension">40dp</dimen>
+
 
 </resources>
