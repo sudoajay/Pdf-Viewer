@@ -23,13 +23,13 @@ interface PdfDao {
     @Query("Select * From PdfTable Order By Size Asc ")
     fun getSortBySize(): DataSource.Factory<Int, Pdf>
 
-
-
     @Query("SELECT * FROM PdfTable WHERE Name LIKE :search")
     fun searchItem(search: String?): DataSource.Factory<Int, Pdf>
 
 
 
+    @Query("Select Count(*) FROM PdfTable ")
+    suspend fun getCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(pdf: Pdf)

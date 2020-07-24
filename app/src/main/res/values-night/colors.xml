@@ -20,4 +20,7 @@
     <!--Toast Color Background and text Color-->
     <color name="toastBackgroundColor">#272727</color>
     <color name="toastTextColor">#dae1e7</color>
+
+<!--    Divider color-->
+    <color name="divider">#dae1e7</color>
 </resources>

@@ -26,7 +26,10 @@ import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.BaseActivity
 import com.sudoajay.pdfviewer.activity.showPdfViewer.ShowPdfViewer
 import com.sudoajay.pdfviewer.databinding.ActivityMainBinding
-import com.sudoajay.pdfviewer.helper.*
+import com.sudoajay.pdfviewer.helper.CopyFile
+import com.sudoajay.pdfviewer.helper.CustomToast
+import com.sudoajay.pdfviewer.helper.DarkModeBottomSheet
+import com.sudoajay.pdfviewer.helper.InsetDivider
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidExternalStoragePermission
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidSdCardPermission
 import com.sudoajay.pdfviewer.helper.storagePermission.SdCardPath
@@ -64,6 +67,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         binding.lifecycleOwner = this
 
         setReference()
+
+        viewModel.databaseConfiguration(this)
 
         androidExternalStoragePermission =
             AndroidExternalStoragePermission(applicationContext, this)
@@ -125,14 +130,18 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
         val pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(applicationContext, this)
 
-        viewModel.appList!!.observe(this, Observer {
+        viewModel
 
+        viewModel.appList!!.observe(this, androidx.lifecycle.Observer {
             pagingAppRecyclerAdapter.submitList(it)
             recyclerView.adapter = pagingAppRecyclerAdapter
-            if (binding.swipeRefresh.isRefreshing )
+            if (binding.swipeRefresh.isRefreshing)
                 binding.swipeRefresh.isRefreshing = false
 
-            if (it.isEmpty()) CustomToast.toastIt(applicationContext, "Empty List")
+            if (it.isEmpty()) CustomToast.toastIt(
+                applicationContext,
+                getString(R.string.empty_list_text)
+            )
 
         })
 
@@ -430,4 +439,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             }
         }
     }
+
+
 }

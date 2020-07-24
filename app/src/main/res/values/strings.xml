@@ -68,6 +68,9 @@
 <!--    Changes In Database-->
     <string name="filter_changes_text">filterChanges</string>
 
+<!--    Empty List -->
+    <string name="empty_list_text"> No Pdf Found </string>
+
 
 
 

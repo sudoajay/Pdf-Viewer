@@ -10,7 +10,7 @@ import com.sudoajay.pdfviewer.R
 
 class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
 
-    lateinit var app: DataSource.Factory<Int, Pdf>
+    lateinit var pdf: DataSource.Factory<Int, Pdf>
 
     fun handleFilterChanges(filter: String): LiveData<PagedList<Pdf>> {
 
@@ -23,7 +23,7 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
                     context.getString(R.string.title_menu_order_by),
                     context.getString(R.string.filter_by_name_order)
                 )
-           app = when (getOrderBy){
+           pdf = when (getOrderBy){
                 context.getString(R.string.filter_by_name_order) -> pdfDao.getSortByName()
                context.getString(R.string.filter_by_date_order) ->pdfDao.getSortByDate()
                context.getString(R.string.filter_by_most_used_order) ->pdfDao.getSortByMostUsed()
@@ -32,7 +32,7 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
            }
 
 
-            return app.toLiveData(
+            return pdf.toLiveData(
                 PagedList.Config.Builder()
                     .setPageSize(20) //
                     .setInitialLoadSizeHint(20) //
@@ -58,6 +58,10 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
 
     suspend fun insert(pdf: Pdf) {
         pdfDao.insert(pdf)
+    }
+
+    suspend fun getCount(): Int {
+        return pdfDao.getCount()
     }
 
 
