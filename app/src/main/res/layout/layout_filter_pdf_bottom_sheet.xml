@@ -151,52 +151,6 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/systemApps_ConstraintLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="@{() -> bottomSheet.setValue(@string/filter_by_most_used_order)}"
-            android:background="?selectableItemBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/installationDate_ConstraintLayout">
-
-            <TextView
-                android:id="@+id/systemApps_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/filter_by_most_used_order_trans"
-                android:textColor="?attr/headingNormalTextColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/systemApps_ImageView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/systemApps_ImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:visibility="@{bottomSheet.isValue(@string/filter_by_most_used_order)  ?  View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/systemApps_TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/systemApps_TextView"
-                app:srcCompat="@drawable/ic_tick"
-                tools:ignore="ContentDescription"
-                app:tint="?attr/fadeTextColor" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/userApps_ConstraintLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -208,7 +162,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/systemApps_ConstraintLayout">
+            app:layout_constraintTop_toBottomOf="@+id/installationDate_ConstraintLayout">
 
             <TextView
                 android:id="@+id/userApps_TextView"
@@ -217,8 +171,8 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/filter_by_size_order_trans"
                 android:textColor="?attr/headingNormalTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -238,8 +192,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/userApps_TextView"
                 app:srcCompat="@drawable/ic_tick"
-                tools:ignore="ContentDescription"
-                app:tint="?attr/fadeTextColor" />
+                app:tint="?attr/fadeTextColor"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -11,7 +11,6 @@ class Pdf(
     @ColumnInfo(name = "Name") val name: String,
     @ColumnInfo(name = "Path") val path: String,
     @ColumnInfo(name = "Date") val date: Long,
-    @ColumnInfo(name = "Size") val size: Long,
-    @ColumnInfo(name = "Most_Used") val mostUsed: Long
+    @ColumnInfo(name = "Size") val size: Long
 
 )

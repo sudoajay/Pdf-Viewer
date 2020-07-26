@@ -6,6 +6,7 @@
     <attr name="fadeTextColor" format="reference"/>
     <attr name="bgBoxColor" format="reference"/>
     <attr name="bottomItemTintColor" format="reference"/>
+    <attr name="pdfRedColor" format="reference"/>
 
 
 </resources>

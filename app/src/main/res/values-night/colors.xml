@@ -15,6 +15,7 @@
     <color name="fadeTextColor">#dae1e7</color>
     <color name="bgBoxColor">#272727</color>
     <color name="bottomItemTintColor">#74A0EE</color>
+    <color name="pdfRedColor">#CF6679</color>
 
 
     <!--Toast Color Background and text Color-->

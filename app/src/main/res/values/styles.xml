@@ -15,6 +15,7 @@
         <item name="fadeTextColor">@color/fadeTextColor</item>
         <item name="bgBoxColor">@color/bgBoxColor</item>
         <item name="bottomItemTintColor">@color/bottomItemTintColor</item>
+        <item name="pdfRedColor">@color/pdfRedColor</item>
 
 
     </style>

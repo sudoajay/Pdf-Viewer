@@ -1,54 +1,59 @@
 package com.sudoajay.pdfviewer.activity.mainActivity
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.Pdf
+import com.sudoajay.pdfviewer.helper.FileSize.convertIt
 import kotlinx.android.synthetic.main.recycler_view_pdf_item.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class PagingAppRecyclerAdapter(context: Context, private var appFilter: AppFilter) :
-    PagedListAdapter<Pdf, PagingAppRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
-
-
-    private var packageManager = context.packageManager
-
+class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
+    PagedListAdapter<Pdf, PagingAppRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val recyclerAdapter = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_view_pdf_item, parent, false)
-
         return MyViewHolder(recyclerAdapter)
-
     }
-
     class MyViewHolder(view: View) :
         RecyclerView.ViewHolder(view) {
-        val pdfName: TextView = view.pdfName_TextView
-        val pdfInfo: TextView = view.pdfInfo_TextView
-        val moreOption: ImageView = view.moreOption_imageView
+        var pdfName: TextView = view.pdfName_TextView
+        var pdfInfo: TextView = view.pdfInfo_TextView
+        var moreOption: ImageView = view.moreOption_imageView
+        var pdf_ImageView: ImageView = view.pdf_ImageView
+        var textContainer: LinearLayout = view.textContainer_linearLayout
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val app = getItem(position)
+        val sdf = SimpleDateFormat(" , h:mm a , d MMM yyyy ", Locale.getDefault())
 
+        val pdf = getItem(position)
+        holder.pdfName.text = pdf!!.name
+        holder.pdfInfo.text = convertIt(pdf.size) + sdf.format(pdf.date)
 
+        holder.pdf_ImageView.setOnClickListener {
+            mainActivity.copyingPdfFile(pdf.path, null)
+        }
+        holder.textContainer.setOnClickListener {
+            mainActivity.copyingPdfFile(pdf.path, null)
+        }
+
+        holder.moreOption.setOnClickListener {
+            mainActivity.showPopupMenu(holder.moreOption, position)
+        }
     }
 
     companion object {
@@ -70,16 +75,6 @@ class PagingAppRecyclerAdapter(context: Context, private var appFilter: AppFilte
         }
     }
 
-    private fun getApplicationsIcon(applicationInfo: String): Drawable {
-        return try {
-            packageManager.getApplicationIcon(applicationInfo)
-        } catch (e: PackageManager.NameNotFoundException) {
-            defaultApplicationIcon
-        }
-    }
-
-    private val defaultApplicationIcon: Drawable
-        get() = packageManager.defaultActivityIcon
 
 
 }

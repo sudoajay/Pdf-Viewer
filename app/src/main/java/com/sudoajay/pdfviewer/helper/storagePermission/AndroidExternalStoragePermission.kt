@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.documentfile.provider.DocumentFile
 import com.sudoajay.pdfviewer.R
@@ -24,6 +25,7 @@ class AndroidExternalStoragePermission(
     private var activity: Activity
 ) {
 
+    private var TAG = "AndroidExternalStorage"
 
     fun callPermission() { // check if permission already given or not
         if (!isExternalStorageWritable) {
@@ -75,7 +77,8 @@ class AndroidExternalStoragePermission(
         if (Build.VERSION.SDK_INT >= 23) {
             activity.let {
                 ActivityCompat.requestPermissions(
-                    it, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    it, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     1
                 )
             }
@@ -106,6 +109,7 @@ class AndroidExternalStoragePermission(
                         setExternalPath(context, getExternalPathCacheDir(context).toString())
                         return true
                     } else {
+                        Log.e(TAG, Build.VERSION.SDK_INT.toString())
                         val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
                         val res = activity.checkCallingOrSelfPermission(permission)
                         res == PackageManager.PERMISSION_GRANTED

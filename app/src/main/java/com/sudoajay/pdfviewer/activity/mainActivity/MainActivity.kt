@@ -11,11 +11,9 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -68,7 +66,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
         setReference()
 
-        viewModel.databaseConfiguration(this)
+        callDataBaseConfig()
 
         androidExternalStoragePermission =
             AndroidExternalStoragePermission(applicationContext, this)
@@ -80,6 +78,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             showSelectOption()
             Log.e(TAG, "No isExternalStorageWritable")
         } else {
+            androidExternalStoragePermission.callPermission()
             Log.e(TAG, "Yes isExternalStorageWritable")
 
         }
@@ -98,6 +97,10 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
             )
         )
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.onRefresh()
+        }
 //         Setup BottomAppBar Navigation Setup
         binding.bottomAppBar.navigationIcon?.mutate()?.let {
             it.setTint(
@@ -128,17 +131,18 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(applicationContext, this)
-
-        viewModel
+        val pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(this)
 
         viewModel.appList!!.observe(this, androidx.lifecycle.Observer {
+            for (x in it) {
+                Log.e(TAG, x.name)
+            }
             pagingAppRecyclerAdapter.submitList(it)
             recyclerView.adapter = pagingAppRecyclerAdapter
             if (binding.swipeRefresh.isRefreshing)
                 binding.swipeRefresh.isRefreshing = false
 
-            if (it.isEmpty()) CustomToast.toastIt(
+            if (it.isEmpty() && androidExternalStoragePermission.isExternalStorageWritable) CustomToast.toastIt(
                 applicationContext,
                 getString(R.string.empty_list_text)
             )
@@ -162,6 +166,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             .insets(marginLeft, 0)
             .build()
     }
+
+    private fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
 
     private fun showDarkMode() {
         val darkModeBottomSheet = DarkModeBottomSheet(MainActivity::class.java.simpleName)
@@ -264,6 +270,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                     AndroidExternalStoragePermission.getExternalPathCacheDir(applicationContext)
                         .toString()
                 )
+                callDataBaseConfig()
 
             }
 
@@ -283,7 +290,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
 //        Here I get OpenManage File
         if (this.requestCode == requestCode && data != null) {
-            copyingPdfFile(data.data)
+            copyingPdfFile(null,data.data)
             Log.e(TAG, data.data.toString() + " Get File Uri - ")
             return
         } else if (requestCode == 42 || requestCode == 58) {
@@ -363,6 +370,41 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     }
 
+     fun copyingPdfFile( filePath: String?, fileUri: Uri?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            var uri: Uri? = fileUri
+            val dst: File
+            if (!filePath.isNullOrEmpty() && filePath.startsWith("content:")) {
+                uri = Uri.parse(filePath)
+            }
+            if (uri != null) {
+                val cache: String = cacheDir.absolutePath
+                val fileName: String = queryName(contentResolver, fileUri)
+                dst = File(
+                    """$cache/$fileName"""
+                )
+                Log.e(TAG, "File Dest " + dst.absolutePath.toString())
+
+                if (dst.exists()) dst.delete()
+
+
+                CopyFile.copyUri(applicationContext, uri, dst)
+            } else {
+                val src = File(filePath.toString())
+                dst = File(cacheDir.toString() + "/" + src.name)
+                //                If file exist with same size
+                if (dst.exists()) dst.delete()
+                CopyFile.copy(src, dst)
+            }
+            launch {
+                val intent = Intent(applicationContext, ShowPdfViewer::class.java)
+                intent.action = dst.absolutePath
+                startActivity(intent)
+            }
+        }
+
+    }
+
 
     override fun handleDialogClose(value: String) {
         if (value == getString(R.string.select_option_text)) {
@@ -392,30 +434,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         )
     }
 
-    private fun copyingPdfFile(fileUri: Uri?) {
-        CoroutineScope(Dispatchers.IO).launch {
-            if (fileUri != null) {
-                val cache: String = cacheDir.absolutePath
-                val fileName: String = queryName(contentResolver, fileUri)
-                val dst = File(
-                    """$cache/$fileName"""
-                )
-                Log.e(TAG, "File Dest " + dst.absolutePath.toString())
-
-                if (dst.exists()) dst.delete()
-
-
-                CopyFile.copyUri(applicationContext, fileUri, dst)
-
-                launch {
-                    val intent = Intent(applicationContext, ShowPdfViewer::class.java)
-                    intent.action = dst.absolutePath
-                    startActivity(intent)
-                }
-            }
-        }
-
-    }
 
     @SuppressLint("Recycle")
     private fun queryName(resolver: ContentResolver, uri: Uri?): String {
@@ -425,6 +443,20 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         val name = returnCursor.getString(nameIndex)
         returnCursor.close()
         return name
+    }
+
+
+    /**
+     * Showing popup menu when tapping on 3 dots
+     */
+    fun showPopupMenu(view: View, position: Int) {
+        val popup = PopupMenu(applicationContext, view, Gravity.END)
+        val inflater: MenuInflater = popup.menuInflater
+        inflater.inflate(R.menu.more_option, popup.menu)
+
+        //set menu item click listener here
+        popup.setOnMenuItemClickListener(MyMenuItemClickListener(position))
+        popup.show()
     }
 
     /**

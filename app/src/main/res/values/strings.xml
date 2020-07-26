@@ -42,7 +42,6 @@
     <string name="title_menu_order_by_trans">Order by</string>
     <string name="filter_by_name_order_trans">Name</string>
     <string name="filter_by_date_order_trans">Date</string>
-    <string name="filter_by_most_used_order_trans">Most Used</string>
     <string name="filter_by_size_order_trans">Size</string>
 
 
@@ -71,6 +70,12 @@
 <!--    Empty List -->
     <string name="empty_list_text"> No Pdf Found </string>
 
+
+<!--    More Option Menu Item-->
+    <string name="open_menuOption">Open</string>
+    <string name="shareFile_menuOption">Share File</string>
+    <string name="deleteFile_menuOption">Delete File</string>
+    <string name="shortcut_menuOption">Shortcut</string>
 
 
 
@@ -102,7 +107,6 @@
     <string name="title_menu_order_by" translatable="false">Order by</string>
     <string name="filter_by_name_order" translatable="false">Name</string>
     <string name="filter_by_date_order" translatable="false">Date</string>
-    <string name="filter_by_most_used_order" translatable="false">Most Used</string>
     <string name="filter_by_size_order" translatable="false">Size</string>
 
 

@@ -26,7 +26,6 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
            pdf = when (getOrderBy){
                 context.getString(R.string.filter_by_name_order) -> pdfDao.getSortByName()
                context.getString(R.string.filter_by_date_order) ->pdfDao.getSortByDate()
-               context.getString(R.string.filter_by_most_used_order) ->pdfDao.getSortByMostUsed()
                context.getString(R.string.filter_by_size_order) ->pdfDao.getSortBySize()
                else -> pdfDao.getSortByName()
            }

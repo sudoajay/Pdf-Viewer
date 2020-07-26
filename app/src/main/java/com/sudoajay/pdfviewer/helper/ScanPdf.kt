@@ -3,6 +3,7 @@ package com.sudoajay.pdfviewer.helper
 import android.app.Activity
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.Pdf
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.PdfRepository
@@ -18,23 +19,27 @@ class ScanPdf(private var activity: Activity, private var pdfRepository: PdfRepo
         AndroidExternalStoragePermission(activity.applicationContext, activity)
     private var androidSdCardPermission =
         AndroidSdCardPermission(activity.applicationContext, activity)
-
+    private var TAG = "ScanPdf"
 
     suspend fun scanUsingFile() {
 
         val externalDir =
             AndroidExternalStoragePermission.getExternalPath(activity.applicationContext)
         val sdCardDir = AndroidSdCardPermission.getSdCardPath(activity.applicationContext)
+
+
 //      Its supports till android 9 & api 28
         if (androidExternalStoragePermission.isExternalStorageWritable) {
             getAllPathFile(File(externalDir))
         }
+        Log.e(TAG, androidExternalStoragePermission.isExternalStorageWritable.toString())
         if (Build.VERSION.SDK_INT >= 21 && androidSdCardPermission.isSdStorageWritable) {
             getAllPathFile(File(sdCardDir))
         }
     }
 
     private suspend fun getAllPathFile(directory: File) {
+        Log.e(TAG, directory.absolutePath)
         val extension = ".pdf"
         var getName: String
         try {
@@ -111,8 +116,7 @@ class ScanPdf(private var activity: Activity, private var pdfRepository: PdfRepo
                 name,
                 path,
                 date,
-                size,
-                0
+                size
             )
         )
     }

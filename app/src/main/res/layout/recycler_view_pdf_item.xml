@@ -9,7 +9,7 @@
     android:paddingBottom="10dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/pdf_ImageView"
         android:layout_width="@dimen/image_dimension"
         android:layout_height="@dimen/image_dimension"
         android:layout_marginStart="16dp"
@@ -17,20 +17,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_pdf"
+        android:tint="?attr/pdfRedColor"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
-        android:id="@+id/texts_container"
+        android:id="@+id/textContainer_linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_toEndOf="@id/imageView"
+        android:layout_toEndOf="@id/pdf_ImageView"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/moreOption_imageView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/pdf_ImageView"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -59,6 +60,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_more_option"
+        android:tint="?attr/headingNormalTextColor"
         tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

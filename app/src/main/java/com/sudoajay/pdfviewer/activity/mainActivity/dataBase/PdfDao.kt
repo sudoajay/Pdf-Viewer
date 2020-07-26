@@ -17,9 +17,6 @@ interface PdfDao {
     @Query("Select * From PdfTable Order By Date Desc ")
     fun getSortByDate(): DataSource.Factory<Int, Pdf>
 
-    @Query("Select * From PdfTable Order By Most_Used Desc ")
-    fun getSortByMostUsed(): DataSource.Factory<Int, Pdf>
-
     @Query("Select * From PdfTable Order By Size Asc ")
     fun getSortBySize(): DataSource.Factory<Int, Pdf>
 

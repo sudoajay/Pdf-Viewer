@@ -3,6 +3,7 @@ package com.sudoajay.pdfviewer.activity.mainActivity
 import android.app.Activity
 import android.app.Application
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,7 +24,7 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
 
     var appList: LiveData<PagedList<Pdf>>? = null
-
+    var TAG = "MainActivityViewModel"
     private var _application = application
     private var pdfRepository: PdfRepository
 
@@ -52,8 +53,13 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
         getHideProgress()
         CoroutineScope(Dispatchers.IO).launch {
             withContext(Dispatchers.IO) {
-                if (pdfRepository.getCount() == 0)
+                if (pdfRepository.getCount() == 0) {
+                    Log.e(TAG , "Is Empty ")
                     pdfDatabaseConfiguration(activity)
+                }else{
+                    Log.e(TAG , "Is not Empty ")
+
+                }
             }
             hideProgress!!.postValue(  false)
         }
@@ -68,6 +74,10 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
         } else {
             scanPdf.scanUsingDoc()
         }
+    }
+
+    fun onRefresh() {
+            appList!!.value!!.dataSource.invalidate()
     }
 
     fun getHideProgress(): LiveData<Boolean> {

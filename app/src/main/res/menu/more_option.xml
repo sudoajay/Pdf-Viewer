@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/open_menuOption"
+        android:title="@string/open_menuOption" />
+
+    <item
+        android:id="@+id/shareFile_menuOption"
+        android:title="@string/shareFile_menuOption" />
+    <item
+        android:id="@+id/deleteFile_menuOption"
+        android:title="@string/deleteFile_menuOption" />
+    <item
+        android:id="@+id/shortcut_menuOption"
+        android:title="@string/shortcut_menuOption" />
+</menu>

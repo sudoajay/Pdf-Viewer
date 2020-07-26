@@ -1,16 +1,13 @@
 package com.sudoajay.pdfviewer.activity.mainActivity
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.databinding.LayoutDialogSelectoptionBinding
-import com.sudoajay.pdfviewer.helper.CustomToast
 
 
 class SelectOptionBottomSheet : BottomSheetDialogFragment() {
@@ -48,14 +45,16 @@ class SelectOptionBottomSheet : BottomSheetDialogFragment() {
             ).apply()
 
         isSelectedBottomSheetFragment!!.handleDialogClose(getString(R.string.select_option_text))
-        dismiss()
+        if (getString(R.string.scan_file_text) == value)
+            dismiss()
     }
 
     companion object{
         fun getValue(context: Context): String {
             return context.getSharedPreferences("state", Context.MODE_PRIVATE)
                 .getString(
-                    context.getString(R.string.select_option_text), context.getString(R.string.scan_file_text)
+                    context.getString(R.string.select_option_text),
+                    context.getString(R.string.select_file_text)
                 )
                 .toString()
         }
