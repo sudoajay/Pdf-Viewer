@@ -99,7 +99,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         )
 
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.onRefresh()
+                viewModel.onRefresh()
         }
 //         Setup BottomAppBar Navigation Setup
         binding.bottomAppBar.navigationIcon?.mutate()?.let {
@@ -137,15 +137,11 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             for (x in it) {
                 Log.e(TAG, x.name)
             }
+
             pagingAppRecyclerAdapter.submitList(it)
             recyclerView.adapter = pagingAppRecyclerAdapter
             if (binding.swipeRefresh.isRefreshing)
                 binding.swipeRefresh.isRefreshing = false
-
-            if (it.isEmpty() && androidExternalStoragePermission.isExternalStorageWritable) CustomToast.toastIt(
-                applicationContext,
-                getString(R.string.empty_list_text)
-            )
 
         })
 
@@ -167,7 +163,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             .build()
     }
 
-    private fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
+    fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
 
     private fun showDarkMode() {
         val darkModeBottomSheet = DarkModeBottomSheet(MainActivity::class.java.simpleName)
@@ -196,7 +192,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         when (item.itemId) {
             android.R.id.home -> showDarkMode()
             R.id.darkMode_optionMenu -> showDarkMode()
-//            R.id.refresh_optionMenu->
+            R.id.refresh_optionMenu -> viewModel.onRefresh()
             R.id.filePicker_optionMenu -> openFilePicker()
          //   R.id.more_setting_optionMenu ->
             else -> return super.onOptionsItemSelected(item)
@@ -267,7 +263,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             } else {
                 AndroidExternalStoragePermission.setExternalPath(
                     applicationContext,
-                    AndroidExternalStoragePermission.getExternalPathCacheDir(applicationContext)
+                    AndroidExternalStoragePermission.getExternalPathFromCacheDir(applicationContext)
                         .toString()
                 )
                 callDataBaseConfig()
@@ -449,13 +445,13 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     /**
      * Showing popup menu when tapping on 3 dots
      */
-    fun showPopupMenu(view: View, position: Int) {
-        val popup = PopupMenu(applicationContext, view, Gravity.END)
+    fun showPopupMenu(view: View, path: String) {
+        val popup = PopupMenu(this, view, Gravity.END)
         val inflater: MenuInflater = popup.menuInflater
         inflater.inflate(R.menu.more_option, popup.menu)
 
         //set menu item click listener here
-        popup.setOnMenuItemClickListener(MyMenuItemClickListener(position))
+        popup.setOnMenuItemClickListener(MyMenuItemClickListener(this, path))
         popup.show()
     }
 

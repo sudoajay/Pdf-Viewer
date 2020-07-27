@@ -48,12 +48,12 @@ class AndroidSdCardPermission(private var context: Context, private var activity
             return when {
                 //  Here use of DocumentFile in android 10 not File is using anymore
                 Build.VERSION.SDK_INT > 28 -> getSdCardUri(context).isNotEmpty()
-                        && getSdCardUri(context) != AndroidExternalStoragePermission.getExternalPathCacheDir(
+                        && getSdCardUri(context) != AndroidExternalStoragePermission.getExternalPathFromCacheDir(
                     context
                 )
                         && !isSameUri
                 Build.VERSION.SDK_INT >= 21 -> File(getSdCardPath(context)).exists()
-                        && getSdCardPath(context) != AndroidExternalStoragePermission.getExternalPathCacheDir(
+                        && getSdCardPath(context) != AndroidExternalStoragePermission.getExternalPathFromCacheDir(
                     context
                 )
                 else -> {

@@ -32,6 +32,9 @@
     <!--    Delete Cache-->
     <string name="successfully_cache_data_is_deleted_text">Successfully Cache Data Is Deleted</string>
 
+<!--    Delete File-->
+    <string name="successfully_file_deleted_text">Successfully File Deleted</string>
+
     <!--    BottomSheetDialog select option-->
     <string name="select_option_trans_text">Select Option</string>
     <string name="scan_file_trans_text">Scan File</string>

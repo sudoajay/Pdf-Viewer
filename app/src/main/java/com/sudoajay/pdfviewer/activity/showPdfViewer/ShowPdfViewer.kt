@@ -1,20 +1,18 @@
 package com.sudoajay.pdfviewer.activity.showPdfViewer
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.print.PrintAttributes
-import android.print.PrintManager
 import android.view.View
 import android.view.ViewTreeObserver
-import android.webkit.*
-import android.widget.Toast
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.sudoajay.pdfviewer.R
@@ -48,23 +46,11 @@ class ShowPdfViewer : AppCompatActivity() {
 
         url = "file:///android_asset/web/viewer.html?file=$getPath"
 
-        onSwipeRefresh()
         setUpWebView()
     }
 
 
-    private fun onSwipeRefresh() {
-        binding.swipeRefresh.setColorSchemeResources(R.color.primaryAppColor)
-        binding.swipeRefresh.setProgressViewOffset(true, 0, 100)
 
-        binding.swipeRefresh.setOnRefreshListener {
-            binding.myWebView.reload()
-            GlobalScope.launch {
-                delay(500)
-                binding.swipeRefresh.isRefreshing = false
-            }
-        }
-    }
 
     @SuppressLint("SetJavaScriptEnabled", "WrongConstant")
     private fun setUpWebView() {
@@ -80,7 +66,7 @@ class ShowPdfViewer : AppCompatActivity() {
         settings.allowUniversalAccessFromFileURLs = true
         settings.domStorageEnabled = true
         settings.domStorageEnabled = true
-        val appCachePath = applicationContext.applicationContext.cacheDir.absolutePath
+        val appCachePath = applicationContext.cacheDir.absolutePath
         settings.setAppCachePath(appCachePath)
         settings.allowFileAccess = true
         settings.setAppCacheEnabled(true)
@@ -101,23 +87,6 @@ class ShowPdfViewer : AppCompatActivity() {
         }
 
     }
-
-
-    public override fun onStart() {
-        super.onStart()
-        binding.swipeRefresh.viewTreeObserver
-            .addOnScrollChangedListener(ViewTreeObserver.OnScrollChangedListener {
-                binding.swipeRefresh.isEnabled = binding.myWebView.scrollY == 0
-            }
-                .also { mOnScrollChangedListener = it })
-    }
-
-    public override fun onStop() {
-        binding.swipeRefresh.viewTreeObserver.removeOnScrollChangedListener(mOnScrollChangedListener)
-        super.onStop()
-    }
-
-
     internal inner class CustomWebViewClient : WebViewClient() {
         override fun onReceivedError(
             view: WebView,
@@ -140,7 +109,7 @@ class ShowPdfViewer : AppCompatActivity() {
 
         // For 3.0+ Devices (Start)
         // onActivityResult attached before constructor
-        protected fun openFileChooser(
+        private fun openFileChooser(
             uploadMsg: ValueCallback<Uri>,
             acceptType: String?
         ) {
@@ -164,7 +133,7 @@ class ShowPdfViewer : AppCompatActivity() {
         }
 
         //For Android 4.1 only
-        protected fun openFileChooser(
+        private fun openFileChooser(
             uploadMsg: ValueCallback<Uri>,
             acceptType: String?,
             capture: String?
@@ -227,7 +196,7 @@ class ShowPdfViewer : AppCompatActivity() {
         }
 
 
-        protected fun openFileChooser(uploadMsg: ValueCallback<Uri>) {
+        private fun openFileChooser(uploadMsg: ValueCallback<Uri>) {
             uploadFile = uploadMsg
             try {
                 val i = Intent(Intent.ACTION_GET_CONTENT)

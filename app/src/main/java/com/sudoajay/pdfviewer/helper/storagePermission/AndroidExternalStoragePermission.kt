@@ -106,7 +106,7 @@ class AndroidExternalStoragePermission(
                 //  Here use of DocumentFile in android 10 not File is using anymore
                 Build.VERSION.SDK_INT <= 28 -> {
                     if (Build.VERSION.SDK_INT <= 22) {
-                        setExternalPath(context, getExternalPathCacheDir(context).toString())
+                        setExternalPath(context, getExternalPathFromCacheDir(context).toString())
                         return true
                     } else {
                         Log.e(TAG, Build.VERSION.SDK_INT.toString())
@@ -127,7 +127,7 @@ class AndroidExternalStoragePermission(
         }
 
     private val isSamePath: Boolean
-        get() = getExternalUri(context).isNotEmpty() && getExternalPathCacheDir(
+        get() = getExternalUri(context).isNotEmpty() && getExternalPathFromCacheDir(
             context
         ).equals(
             getExternalPath(context)
@@ -135,7 +135,7 @@ class AndroidExternalStoragePermission(
 
 
     companion object {
-        fun getExternalPathCacheDir(context: Context?): String? {
+        fun getExternalPathFromCacheDir(context: Context?): String? {
             //  Its supports till android 9
             val splitWord = "Android/data/"
             val cacheDir = (context!!.externalCacheDir?.absolutePath)?.split(splitWord)

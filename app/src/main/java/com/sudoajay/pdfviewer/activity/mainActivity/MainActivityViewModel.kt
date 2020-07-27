@@ -1,6 +1,5 @@
 package com.sudoajay.pdfviewer.activity.mainActivity
 
-import android.app.Activity
 import android.app.Application
 import android.os.Build
 import android.util.Log
@@ -14,6 +13,7 @@ import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.Pdf
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.PdfDao
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.PdfRepository
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.PdfRoomDatabase
+import com.sudoajay.pdfviewer.helper.CustomToast
 import com.sudoajay.pdfviewer.helper.ScanPdf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +39,6 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 //        Creating Object and Initialization
         pdfRepository = PdfRepository(_application.applicationContext, pdfDao)
 
-        filterChanges()
 
         appList = Transformations.switchMap(filterChanges) {
             pdfRepository.handleFilterChanges(it)
@@ -50,18 +49,22 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
         filterChanges.value = filter
     }
     fun databaseConfiguration(activity: MainActivity) {
+        filterChanges()
         getHideProgress()
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                if (pdfRepository.getCount() == 0) {
-                    Log.e(TAG , "Is Empty ")
-                    pdfDatabaseConfiguration(activity)
-                }else{
-                    Log.e(TAG , "Is not Empty ")
+                if (pdfRepository.getCount() != 0) {
+                    Log.e(TAG, "Is not Empty ")
+                    pdfRepository.deleteAll()
+                } else {
+                    Log.e(TAG, "Is  Empty ")
 
                 }
+                pdfDatabaseConfiguration(activity)
+                hideProgress!!.postValue(false)
+                filterChanges.postValue(_application.getString(R.string.filter_changes_text))
             }
-            hideProgress!!.postValue(  false)
+            checkForEmpty()
         }
 
     }
@@ -78,6 +81,15 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
     fun onRefresh() {
             appList!!.value!!.dataSource.invalidate()
+        CoroutineScope(Dispatchers.Main).launch {
+            checkForEmpty()
+        }
+    }
+
+    private suspend fun checkForEmpty(){
+        if (pdfRepository.getCount() == 0) {
+            CustomToast.toastIt(_application, _application.getString(R.string.empty_list_text))
+        }
     }
 
     fun getHideProgress(): LiveData<Boolean> {

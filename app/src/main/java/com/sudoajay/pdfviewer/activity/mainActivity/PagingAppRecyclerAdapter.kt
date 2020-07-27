@@ -52,7 +52,7 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
         }
 
         holder.moreOption.setOnClickListener {
-            mainActivity.showPopupMenu(holder.moreOption, position)
+            mainActivity.showPopupMenu(holder.moreOption, pdf.path)
         }
     }
 

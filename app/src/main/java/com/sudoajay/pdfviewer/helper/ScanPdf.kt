@@ -44,11 +44,18 @@ class ScanPdf(private var activity: Activity, private var pdfRepository: PdfRepo
         var getName: String
         try {
             for (child in directory.listFiles()!!)
-                if (child.isDirectory) getAllPathFile(child)
-                else {
+                if (child.isDirectory) {
+                    if (!child.path.contains("/Android/data"))
+                        getAllPathFile(child)
+                } else {
                     getName = child.name
                     if (getName.endsWith(extension))
-                        insertDataToDataBase(child.name, child.absolutePath, child.lastModified(), child.length())
+                        insertDataToDataBase(
+                            child.name,
+                            child.absolutePath,
+                            child.lastModified(),
+                            child.length()
+                        )
                 }
         } catch (ignored: Exception) {
         }

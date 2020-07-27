@@ -63,6 +63,9 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
         return pdfDao.getCount()
     }
 
+    suspend fun deleteAll(){
+        pdfDao.deleteAll()
+    }
 
 
 }

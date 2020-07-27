@@ -1,14 +1,17 @@
 package com.sudoajay.pdfviewer.activity.mainActivity
 
+import android.net.Uri
 import android.view.MenuItem
 import androidx.appcompat.widget.PopupMenu
 import com.sudoajay.pdfviewer.R
+import com.sudoajay.pdfviewer.helper.DeleteCache
+import com.sudoajay.pdfviewer.helper.DeleteFile
 
 
 class MyMenuItemClickListener
 /**
  * @param position
- */(var position: Int) :
+ */(var mainActivity: MainActivity, var path: String) :
     PopupMenu.OnMenuItemClickListener {
 
     /**
@@ -16,12 +19,20 @@ class MyMenuItemClickListener
      */
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.open_menuOption ->                    // ...
+            R.id.open_menuOption -> {
+                mainActivity.copyingPdfFile(path, null)                  // ...
                 return true
+            }
             R.id.shareFile_menuOption ->                     // ...
                 return true
-            R.id.deleteFile_menuOption ->                     // ...
+            R.id.deleteFile_menuOption -> {
+                if (path.isNotEmpty() ) {
+                    if(path.startsWith("content:")) DeleteFile.deleteUri(mainActivity.applicationContext, path)
+                    else DeleteFile.delete(mainActivity.applicationContext, path)
+                    mainActivity.callDataBaseConfig()
+                }
                 return true
+            }
             R.id.shortcut_menuOption ->                    // ...
                 return true
         }
