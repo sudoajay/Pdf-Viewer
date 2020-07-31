@@ -43,14 +43,19 @@
 <!--    Filter Pdf Bottom Sheet -->
     <string name="filter_option_text">Filter Option</string>
     <string name="title_menu_order_by_trans">Order by</string>
-    <string name="filter_by_name_order_trans">Name</string>
-    <string name="filter_by_date_order_trans">Date</string>
-    <string name="filter_by_size_order_trans">Size</string>
+    <string name="filter_by_alphabetical_order_trans">Alphabetical order</string>
+    <string name="filter_by_installation_date_order_trans">Installation Date</string>
+    <string name="filter_by_pdf_size_order_trans">Pdf Size</string>
+    
+<!--    Share Pdf File -->
+    <string name="share_pdf_file_text">Share Pdf File</string>
+    <string name="share_pdf_file_loading_text">Sharing Pdf File…</string>
+
 
 
     <!--    Web View-->
     <!--    Error When Opening Url -->
-    <string name="error_text">Error ! Please try to submit the error</string>
+    <string name="submit_error_text">Error ! Please try to submit the error</string>
 
 <!--    Open file-->
     <string name="cannot_open_file_chooser_text">Cannot Open File Chooser</string>
@@ -108,9 +113,9 @@
 
     <!--    Filter Pdf Bottom Sheet -->
     <string name="title_menu_order_by" translatable="false">Order by</string>
-    <string name="filter_by_name_order" translatable="false">Name</string>
-    <string name="filter_by_date_order" translatable="false">Date</string>
-    <string name="filter_by_size_order" translatable="false">Size</string>
+    <string name="filter_by_alphabetical_order" translatable="false">Alphabetical order</string>
+    <string name="filter_by_installation_date_order" translatable="false">Installation Date</string>
+    <string name="filter_by_pdf_size_order" translatable="false">Pdf Size</string>
 
 
 </resources>

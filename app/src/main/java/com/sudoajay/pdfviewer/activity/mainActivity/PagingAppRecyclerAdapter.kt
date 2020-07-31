@@ -45,10 +45,10 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
         holder.pdfInfo.text = convertIt(pdf.size) + sdf.format(pdf.date)
 
         holder.pdf_ImageView.setOnClickListener {
-            mainActivity.copyingPdfFile(pdf.path, null)
+            openPdfFile(pdf.path)
         }
         holder.textContainer.setOnClickListener {
-            mainActivity.copyingPdfFile(pdf.path, null)
+            openPdfFile(pdf.path)
         }
 
         holder.moreOption.setOnClickListener {
@@ -74,6 +74,8 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
 
         }
     }
+
+    private fun openPdfFile(pdfPath:String) = mainActivity.copyingPdfFile(pdfPath, null, true)
 
 
 

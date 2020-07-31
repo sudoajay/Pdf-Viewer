@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,10 +32,7 @@ import com.sudoajay.pdfviewer.helper.InsetDivider
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidExternalStoragePermission
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidSdCardPermission
 import com.sudoajay.pdfviewer.helper.storagePermission.SdCardPath
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
 import java.util.*
 
@@ -239,7 +237,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
             override fun onQueryTextChange(newText: String): Boolean {
                 val query: String = newText.toLowerCase(Locale.ROOT).trim { it <= ' ' }
-//                appFilterViewModel.filterChanges(query)
+                viewModel.filterChanges(query)
                 return true
             }
         })
@@ -286,7 +284,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
 //        Here I get OpenManage File
         if (this.requestCode == requestCode && data != null) {
-            copyingPdfFile(null,data.data)
+            copyingPdfFile(null, data.data, true)
             Log.e(TAG, data.data.toString() + " Get File Uri - ")
             return
         } else if (requestCode == 42 || requestCode == 58) {
@@ -366,41 +364,76 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     }
 
-     fun copyingPdfFile( filePath: String?, fileUri: Uri?) {
+    fun copyingPdfFile(filePath: String?, fileUri: Uri?, launchIt: Boolean) {
+
         CoroutineScope(Dispatchers.IO).launch {
             var uri: Uri? = fileUri
-            val dst: File
-            if (!filePath.isNullOrEmpty() && filePath.startsWith("content:")) {
-                uri = Uri.parse(filePath)
-            }
-            if (uri != null) {
-                val cache: String = cacheDir.absolutePath
-                val fileName: String = queryName(contentResolver, fileUri)
-                dst = File(
-                    """$cache/$fileName"""
-                )
-                Log.e(TAG, "File Dest " + dst.absolutePath.toString())
+            var dst = File("")
+            withContext(Dispatchers.IO) {
+                if (!filePath.isNullOrEmpty() && filePath.startsWith("content:")) {
+                    uri = Uri.parse(filePath)
+                }
+                if (uri != null) {
+                    val cache: String = cacheDir.absolutePath
+                    val fileName: String = queryName(contentResolver, fileUri)
+                    dst = File(
+                        """$cache/$fileName"""
+                    )
+                    Log.e(TAG, "File Dest " + dst.absolutePath.toString())
 
-                if (dst.exists()) dst.delete()
+                    if (dst.exists()) dst.delete()
 
 
-                CopyFile.copyUri(applicationContext, uri, dst)
-            } else {
-                val src = File(filePath.toString())
-                dst = File(cacheDir.toString() + "/" + src.name)
-                //                If file exist with same size
-                if (dst.exists()) dst.delete()
-                CopyFile.copy(src, dst)
+                    CopyFile.copyUri(applicationContext, uri!!, dst)
+                } else {
+                    val src = File(filePath.toString())
+                    dst = File(cacheDir.toString() + "/" + src.name)
+                    //                If file exist with same size
+                    if (dst.exists()) dst.delete()
+                    CopyFile.copy(src, dst)
+                }
             }
-            launch {
-                val intent = Intent(applicationContext, ShowPdfViewer::class.java)
-                intent.action = dst.absolutePath
-                startActivity(intent)
-            }
+            if (launchIt) launchPdfViewer(dst)
+            else shareTheFile(dst)
+
         }
 
     }
 
+    private fun launchPdfViewer(dst: File) {
+        val intent = Intent(applicationContext, ShowPdfViewer::class.java)
+        intent.action = dst.absolutePath
+        startActivity(intent)
+    }
+
+    private fun shareTheFile(file: File) {
+        try {
+            val filename = file.name
+            val fileLocation = File(cacheDir, filename)
+            Log.e(TAG , fileLocation.absolutePath)
+            val path = FileProvider.getUriForFile(
+                this,
+                this.applicationContext.packageName + ".provider",
+                fileLocation
+            )
+
+            val intentShareFile = Intent(Intent.ACTION_SEND)
+            if (fileLocation.exists()) {
+                intentShareFile.type = "application/pdf"
+                intentShareFile.putExtra(
+                    Intent.EXTRA_STREAM,
+                   path)
+                intentShareFile.putExtra(
+                    Intent.EXTRA_SUBJECT,
+                    getString(R.string.share_pdf_file_loading_text)
+                )
+                intentShareFile.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_pdf_file_loading_text))
+                startActivity(Intent.createChooser(intentShareFile, getString(R.string.share_pdf_file_text)))
+            }
+        } catch (e: Exception) {
+            CustomToast.toastIt(applicationContext, getString(R.string.submit_error_text))
+        }
+    }
 
     override fun handleDialogClose(value: String) {
         if (value == getString(R.string.select_option_text)) {

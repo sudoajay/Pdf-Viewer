@@ -21,12 +21,12 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
             val getOrderBy =
                 context.getSharedPreferences("state", Context.MODE_PRIVATE).getString(
                     context.getString(R.string.title_menu_order_by),
-                    context.getString(R.string.filter_by_name_order)
+                    context.getString(R.string.filter_by_alphabetical_order)
                 )
            pdf = when (getOrderBy){
-                context.getString(R.string.filter_by_name_order) -> pdfDao.getSortByName()
-               context.getString(R.string.filter_by_date_order) ->pdfDao.getSortByDate()
-               context.getString(R.string.filter_by_size_order) ->pdfDao.getSortBySize()
+                context.getString(R.string.filter_by_alphabetical_order) -> pdfDao.getSortByName()
+               context.getString(R.string.filter_by_installation_date_order) ->pdfDao.getSortByDate()
+               context.getString(R.string.filter_by_pdf_size_order) ->pdfDao.getSortBySize()
                else -> pdfDao.getSortByName()
            }
 
@@ -39,10 +39,7 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
                     .build()
             )
         } else {
-
             val value = "%$filter%"
-
-
             return pdfDao.searchItem(value).toLiveData(
                 PagedList.Config.Builder()
                     .setPageSize(20) //

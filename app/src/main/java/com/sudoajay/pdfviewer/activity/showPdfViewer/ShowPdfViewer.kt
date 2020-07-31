@@ -94,7 +94,7 @@ class ShowPdfViewer : AppCompatActivity() {
             description: String,
             failingUrl: String
         ) {
-            CustomToast.toastIt(applicationContext, getString(R.string.error_text))
+            CustomToast.toastIt(applicationContext, getString(R.string.submit_error_text))
         }
 
         override fun onPageFinished(view: WebView, url: String) {

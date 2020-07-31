@@ -36,7 +36,7 @@ class FilterPdfBottomSheet : BottomSheetDialogFragment() {
 
     fun isValue(value: String): Boolean {
         return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getString(getString(R.string.title_menu_order_by), getString(R.string.filter_by_name_order)).toString() == value
+            .getString(getString(R.string.title_menu_order_by), getString(R.string.filter_by_alphabetical_order)).toString() == value
     }
 
     fun setValue( value: String) {
