@@ -58,7 +58,6 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
                     pdfRepository.deleteAll()
                 } else {
                     Log.e(TAG, "Is  Empty ")
-
                 }
                 pdfDatabaseConfiguration(activity)
                 hideProgress!!.postValue(false)

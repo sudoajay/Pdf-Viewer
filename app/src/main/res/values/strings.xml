@@ -32,7 +32,7 @@
     <!--    Delete Cache-->
     <string name="successfully_cache_data_is_deleted_text">Successfully Cache Data Is Deleted</string>
 
-<!--    Delete File-->
+    <!--    Delete File-->
     <string name="successfully_file_deleted_text">Successfully File Deleted</string>
 
     <!--    BottomSheetDialog select option-->
@@ -40,29 +40,28 @@
     <string name="scan_file_trans_text">Scan File</string>
     <string name="select_file_trans_text">Select File</string>
 
-<!--    Filter Pdf Bottom Sheet -->
+    <!--    Filter Pdf Bottom Sheet -->
     <string name="filter_option_text">Filter Option</string>
     <string name="title_menu_order_by_trans">Order by</string>
     <string name="filter_by_alphabetical_order_trans">Alphabetical order</string>
     <string name="filter_by_installation_date_order_trans">Installation Date</string>
     <string name="filter_by_pdf_size_order_trans">Pdf Size</string>
-    
-<!--    Share Pdf File -->
+
+    <!--    Share Pdf File -->
     <string name="share_pdf_file_text">Share Pdf File</string>
     <string name="share_pdf_file_loading_text">Sharing Pdf File…</string>
-
 
 
     <!--    Web View-->
     <!--    Error When Opening Url -->
     <string name="submit_error_text">Error ! Please try to submit the error</string>
 
-<!--    Open file-->
+    <!--    Open file-->
     <string name="cannot_open_file_chooser_text">Cannot Open File Chooser</string>
     <string name="select_pdf_file_text">Select Pdf File</string>
     <string name="failed_to_open_file_text">Failed to open file</string>
 
-<!--    Download File-->
+    <!--    Download File-->
     <string name="downloading_not_suppoted_text">Download option is not supported</string>
 
 
@@ -72,20 +71,41 @@
     <string name="filePicker_optionMenu">File Picker</string>
     <string name="more_setting_optionMenu">More Setting</string>
 
-<!--    Changes In Database-->
+    <!--    Changes In Database-->
     <string name="filter_changes_text">filterChanges</string>
 
-<!--    Empty List -->
+    <!--    Empty List -->
     <string name="empty_list_text"> No Pdf Found </string>
 
 
-<!--    More Option Menu Item-->
+    <!--    More Option Menu Item-->
     <string name="open_menuOption">Open</string>
     <string name="shareFile_menuOption">Share File</string>
     <string name="deleteFile_menuOption">Delete File</string>
     <string name="shortcut_menuOption">Shortcut</string>
 
+    <!--    Setting Preference-->
+    <string name="system_setting_text">System Settings</string>
+    <string name="use_dark_mode_text">Use Dark Mode</string>
+    <string name="change_language_text">"Change Language "</string>
+    <string name="clear_cache_text">Clear Cache</string>
+    <string name="help_support_text">Help &amp; Support</string>
+    <string name="privacy_policy_text">Privacy Policy</string>
+    <string name="report_a_bug_text">Report A Bug</string>
+    <string name="report_a_bug_summary_text">submit an issue on Github issue page</string>
+    <string name="send_feedback_text">Send Feedback</string>
+    <string name="send_feedback_summary_text">submit feedback to fix the app bug</string>
+    <string name="more_info_text">More Info</string>
+    <string name="share_app_text">Share App</string>
+    <string name="rate_use_text">Rate-Us</string>
+    <string name="more_app_text">More App</string>
+    <string name="about_app_text">About App</string>
 
+    <string name="title_activity_settings">Setting</string>
+
+
+    <!--    Share App-->
+    <string name="shareMessage">Hey, check This App which helps you to Delete Duplicate and Unnecessary Data from the phone -</string>
 
     <!--        No Trans-->
 
@@ -116,6 +136,25 @@
     <string name="filter_by_alphabetical_order" translatable="false">Alphabetical order</string>
     <string name="filter_by_installation_date_order" translatable="false">Installation Date</string>
     <string name="filter_by_pdf_size_order" translatable="false">Pdf Size</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="share_app_summary_text">share the play store app link</string>
+    <string name="rate_use_summary_text">express your experience through rating</string>
+    <string name="more_app_summary_text">there is more app out there</string>
+    <string name="about_app_summary_text">open github link</string>
 
 
 </resources>

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.BaseActivity
+import com.sudoajay.pdfviewer.activity.settingActivity.SettingsActivity
 import com.sudoajay.pdfviewer.activity.showPdfViewer.ShowPdfViewer
 import com.sudoajay.pdfviewer.databinding.ActivityMainBinding
 import com.sudoajay.pdfviewer.helper.CopyFile
@@ -46,6 +47,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     private var TAG = "MainActivityClass"
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -61,6 +63,10 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+
+        if (!intent.action.isNullOrEmpty() && intent.action.toString() == settingShortcutId) {
+            openMoreSetting()
+        }
 
         setReference()
 
@@ -164,7 +170,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
 
     private fun showDarkMode() {
-        val darkModeBottomSheet = DarkModeBottomSheet(MainActivity::class.java.simpleName)
+        val darkModeBottomSheet = DarkModeBottomSheet(homeShortcutId)
         darkModeBottomSheet.show(
             supportFragmentManager.beginTransaction(),
             darkModeBottomSheet.tag
@@ -192,7 +198,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             R.id.darkMode_optionMenu -> showDarkMode()
             R.id.refresh_optionMenu -> viewModel.onRefresh()
             R.id.filePicker_optionMenu -> openFilePicker()
-         //   R.id.more_setting_optionMenu ->
+            R.id.more_setting_optionMenu -> openMoreSetting()
             else -> return super.onOptionsItemSelected(item)
         }
 
@@ -463,6 +469,11 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         )
     }
 
+    private fun openMoreSetting() {
+        val intent = Intent(applicationContext, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
 
     @SuppressLint("Recycle")
     private fun queryName(resolver: ContentResolver, uri: Uri?): String {
@@ -499,6 +510,13 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                 window.statusBarColor = Color.TRANSPARENT
             }
         }
+    }
+
+    companion object {
+        const val settingShortcutId = "settingShortcut"
+
+        //  Shortcut Info Id
+        const val homeShortcutId = "homeShortcut"
     }
 
 
