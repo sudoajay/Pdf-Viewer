@@ -192,9 +192,14 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         filterPdfBottomSheet.show(supportFragmentManager, filterPdfBottomSheet.tag)
     }
 
+    private fun showNavigationDrawer(){
+        val navigationDrawerBottomSheet = NavigationDrawerBottomSheet()
+        navigationDrawerBottomSheet.show(supportFragmentManager, navigationDrawerBottomSheet.tag)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> showDarkMode()
+            android.R.id.home -> showNavigationDrawer()
             R.id.darkMode_optionMenu -> showDarkMode()
             R.id.refresh_optionMenu -> viewModel.onRefresh()
             R.id.filePicker_optionMenu -> openFilePicker()

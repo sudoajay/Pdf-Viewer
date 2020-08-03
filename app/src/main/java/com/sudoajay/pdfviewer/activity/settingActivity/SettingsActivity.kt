@@ -122,7 +122,7 @@ class SettingsActivity : AppCompatActivity() {
                 findPreference("aboutApp") as Preference?
             aboutApp!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 //open browser or intent here
-                openGithub()
+                openGithubApp()
                 true
             }
 
@@ -160,7 +160,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(i, "Share via"))
         }
 
-        private fun rateUs() {
+         private fun rateUs() {
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(ratingLink)
             startActivity(i)
@@ -172,7 +172,7 @@ class SettingsActivity : AppCompatActivity() {
             i.data = Uri.parse(link)
             startActivity(i)
         }
-        private fun openGithub() {
+        private fun openGithubApp() {
             val link = "https://play.google.com/store/apps/dev?id=5309601131127361849"
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(link)
