@@ -24,6 +24,7 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val recyclerAdapter = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_view_pdf_item, parent, false)
+
         return MyViewHolder(recyclerAdapter)
     }
     class MyViewHolder(view: View) :
@@ -31,20 +32,22 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
         var pdfName: TextView = view.pdfName_TextView
         var pdfInfo: TextView = view.pdfInfo_TextView
         var moreOption: ImageView = view.moreOption_imageView
-        var pdf_ImageView: ImageView = view.pdf_ImageView
+        var pdfImageView: ImageView = view.pdf_ImageView
         var textContainer: LinearLayout = view.textContainer_linearLayout
     }
 
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+
         val sdf = SimpleDateFormat(" , h:mm a , d MMM yyyy ", Locale.getDefault())
 
         val pdf = getItem(position)
         holder.pdfName.text = pdf!!.name
         holder.pdfInfo.text = convertIt(pdf.size) + sdf.format(pdf.date)
 
-        holder.pdf_ImageView.setOnClickListener {
+        holder.pdfImageView.setOnClickListener {
             openPdfFile(pdf.path)
         }
         holder.textContainer.setOnClickListener {

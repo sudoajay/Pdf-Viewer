@@ -56,6 +56,8 @@ class DarkModeBottomSheet(var passAction: String) : BottomSheetDialogFragment() 
             intent.action = passAction
             requireActivity().finish()
             startActivity(intent)
+
+
         }
     }
 

@@ -19,7 +19,7 @@ class ScanPdf(private var activity: Activity, private var pdfRepository: PdfRepo
         AndroidExternalStoragePermission(activity.applicationContext, activity)
     private var androidSdCardPermission =
         AndroidSdCardPermission(activity.applicationContext, activity)
-    private var TAG = "ScanPdf"
+
 
     suspend fun scanUsingFile() {
 
@@ -32,14 +32,12 @@ class ScanPdf(private var activity: Activity, private var pdfRepository: PdfRepo
         if (androidExternalStoragePermission.isExternalStorageWritable) {
             getAllPathFile(File(externalDir))
         }
-        Log.e(TAG, androidExternalStoragePermission.isExternalStorageWritable.toString())
         if (Build.VERSION.SDK_INT >= 21 && androidSdCardPermission.isSdStorageWritable) {
             getAllPathFile(File(sdCardDir))
         }
     }
 
     private suspend fun getAllPathFile(directory: File) {
-        Log.e(TAG, directory.absolutePath)
         val extension = ".pdf"
         var getName: String
         try {

@@ -25,7 +25,6 @@ class AndroidExternalStoragePermission(
     private var activity: Activity
 ) {
 
-    private var TAG = "AndroidExternalStorage"
 
     fun callPermission() { // check if permission already given or not
         if (!isExternalStorageWritable) {
@@ -109,7 +108,6 @@ class AndroidExternalStoragePermission(
                         setExternalPath(context, getExternalPathFromCacheDir(context).toString())
                         return true
                     } else {
-                        Log.e(TAG, Build.VERSION.SDK_INT.toString())
                         val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
                         val res = activity.checkCallingOrSelfPermission(permission)
                         res == PackageManager.PERMISSION_GRANTED

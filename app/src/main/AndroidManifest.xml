@@ -20,7 +20,8 @@
 
         <activity
             android:name=".activity.mainActivity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,14 +29,23 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.BaseActivity"
+            android:launchMode="singleInstance"/>
+
+        <activity
             android:name=".activity.settingActivity.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".activity.showPdfViewer.ShowPdfViewer"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.showPdfViewer.ShowPdfViewer"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".activity.sendFeedback.SendFeedback"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

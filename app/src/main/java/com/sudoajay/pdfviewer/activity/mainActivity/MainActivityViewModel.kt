@@ -13,7 +13,6 @@ import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.Pdf
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.PdfDao
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.PdfRepository
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.PdfRoomDatabase
-import com.sudoajay.pdfviewer.helper.CustomToast
 import com.sudoajay.pdfviewer.helper.ScanPdf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,22 +52,26 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
         getHideProgress()
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                if (pdfRepository.getCount() != 0) {
-                    Log.e(TAG, "Is not Empty ")
+
+                Log.e(TAG, pdfRepository.getCount().toString() + " --- before deltetion")
+                withContext(Dispatchers.Default) {
+                    Log.e(TAG, "Deleteing File ")
                     pdfRepository.deleteAll()
-                } else {
-                    Log.e(TAG, "Is  Empty ")
                 }
-                pdfDatabaseConfiguration(activity)
+                Log.e(TAG, pdfRepository.getCount().toString() + " --- After deltetion")
+                if (isEmpty())
+                    pdfDatabaseConfiguration(activity)
+                Log.e(TAG, pdfRepository.getCount().toString() + " --- After pdfDatabaseConfiguration")
                 hideProgress!!.postValue(false)
                 filterChanges.postValue(_application.getString(R.string.filter_changes_text))
             }
-            checkForEmpty()
+
         }
 
     }
 
     private suspend fun pdfDatabaseConfiguration(activity: MainActivity){
+        Log.e(TAG, " Scan The FIle")
         val scanPdf = ScanPdf(activity, pdfRepository)
         //             Its supports till android 9 & api 28
         if (Build.VERSION.SDK_INT <= 28) {
@@ -79,16 +82,15 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
     }
 
     fun onRefresh() {
-            appList!!.value!!.dataSource.invalidate()
+        appList!!.value!!.dataSource.invalidate()
         CoroutineScope(Dispatchers.Main).launch {
-            checkForEmpty()
+
         }
     }
 
-    private suspend fun checkForEmpty(){
-        if (pdfRepository.getCount() == 0) {
-            CustomToast.toastIt(_application, _application.getString(R.string.empty_list_text))
-        }
+    suspend fun isEmpty(): Boolean {
+        return pdfRepository.getCount() == 0
+
     }
 
     fun getHideProgress(): LiveData<Boolean> {

@@ -68,9 +68,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             openMoreSetting()
         }
 
-        setReference()
 
-        callDataBaseConfig()
+        setReference()
 
         androidExternalStoragePermission =
             AndroidExternalStoragePermission(applicationContext, this)
@@ -86,8 +85,45 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             Log.e(TAG, "Yes isExternalStorageWritable")
 
         }
+        Log.e("MainActivityViewModel" , "calling from  onCreate")
+        callDataBaseConfig()
     }
 
+    override fun onStart() {
+        Log.e("MainActivityViewModel", " Activity - onStart ")
+        super.onStart()
+    }
+
+    override fun onResume() {
+        Log.e("MainActivityViewModel", " Activity - onResume ")
+
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.e("MainActivityViewModel", " Activity - onPause ")
+
+        super.onPause()
+    }
+
+
+    override fun onStop() {
+        Log.e("MainActivityViewModel", " Activity - onStop ")
+
+        super.onStop()
+    }
+    override fun onRestart() {
+        Log.e("MainActivityViewModel", " Activity - onRestart ")
+
+        super.onRestart()
+    }
+
+
+    override fun onDestroy() {
+        Log.e("MainActivityViewModel", " Activity - onDestroy ")
+
+        super.onDestroy()
+    }
     private fun setReference() {
 
         //      Setup Swipe RecyclerView
@@ -102,9 +138,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             )
         )
 
-        binding.swipeRefresh.setOnRefreshListener {
-                viewModel.onRefresh()
-        }
+
 //         Setup BottomAppBar Navigation Setup
         binding.bottomAppBar.navigationIcon?.mutate()?.let {
             it.setTint(
@@ -137,18 +171,29 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
         val pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(this)
 
+
         viewModel.appList!!.observe(this, androidx.lifecycle.Observer {
+
             for (x in it) {
-                Log.e(TAG, x.name)
+                Log.e("MainActivityViewModel", x.name)
             }
+            Log.e("MainActivityViewModel", "_________________________________________________________")
 
             pagingAppRecyclerAdapter.submitList(it)
             recyclerView.adapter = pagingAppRecyclerAdapter
             if (binding.swipeRefresh.isRefreshing)
                 binding.swipeRefresh.isRefreshing = false
 
+            isDataEmpty(it.size)
+
+
         })
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.onRefresh()
+            isDataEmpty(pagingAppRecyclerAdapter.itemCount)
+
+        }
 
     }
 
@@ -168,6 +213,13 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
     fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
+
+    private fun isDataEmpty(it:Int){
+        CoroutineScope(Dispatchers.Main).launch {
+            if(it == 0  && viewModel.isEmpty())
+                CustomToast.toastIt(applicationContext,getString(R.string.empty_list_text))
+        }
+    }
 
     private fun showDarkMode() {
         val darkModeBottomSheet = DarkModeBottomSheet(homeShortcutId)
@@ -275,6 +327,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                     AndroidExternalStoragePermission.getExternalPathFromCacheDir(applicationContext)
                         .toString()
                 )
+                Log.e("MainActivityViewModel" , "calling onRequestPermissionsResult")
+
                 callDataBaseConfig()
 
             }
@@ -365,6 +419,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     private fun spiltUri(uri: String, spiltPart: String): String {
         return uri.split(spiltPart)[0] + spiltPart
+
     }
 
     private fun spiltThePath(url: String, path: String): String {
