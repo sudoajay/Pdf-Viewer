@@ -16,6 +16,11 @@
         <item name="bgBoxColor">@color/bgBoxColor</item>
         <item name="bottomItemTintColor">@color/bottomItemTintColor</item>
         <item name="pdfRedColor">@color/pdfRedColor</item>
+        <item name="feedbackBoxBgColor">@color/feedbackBoxBgColor</item>
+        <item name="boxTextColor">@color/boxTextColor</item>
+        <item name="boxHoverColor">@color/boxHoverColor</item>
+        <item name="errorBoxColor">@color/errorBoxColor</item>
+        <item name="dialogBgColorInfo">@color/dialogBgColorInfo</item>
 
 
     </style>

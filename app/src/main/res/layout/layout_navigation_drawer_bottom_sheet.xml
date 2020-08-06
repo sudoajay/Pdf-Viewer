@@ -61,15 +61,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/divider_height"
-            android:background="@color/divider"
-            app:layout_constraintBottom_toTopOf="@+id/rateUs_ConstraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appInfo_ConstraintLayout" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rateUs_ConstraintLayout"
             android:layout_width="0dp"
@@ -114,15 +106,7 @@
                 app:tint="?attr/headingNormalTextColor"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/divider_height"
-            android:background="@color/divider"
-            app:layout_constraintBottom_toTopOf="@+id/moreApp_ConstraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rateUs_ConstraintLayout" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/moreApp_ConstraintLayout"
             android:layout_width="0dp"
@@ -168,15 +152,6 @@
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/divider_height"
-            android:background="@color/divider"
-            app:layout_constraintBottom_toTopOf="@+id/sendFeedback_ConstraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/moreApp_ConstraintLayout" />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sendFeedback_ConstraintLayout"
             android:layout_width="0dp"
@@ -221,16 +196,6 @@
                 app:tint="?attr/headingNormalTextColor"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/divider_height"
-            android:background="@color/divider"
-            app:layout_constraintBottom_toTopOf="@+id/aboutMe_ConstraintLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sendFeedback_ConstraintLayout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/aboutMe_ConstraintLayout"

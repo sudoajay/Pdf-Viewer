@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.pdfviewer.BuildConfig
 import com.sudoajay.pdfviewer.R
+import com.sudoajay.pdfviewer.activity.sendFeedback.SendFeedback
+import com.sudoajay.pdfviewer.activity.showPdfViewer.ShowPdfViewer
 import com.sudoajay.pdfviewer.databinding.LayoutNavigationDrawerBottomSheetBinding
 
 
@@ -22,7 +24,7 @@ class NavigationDrawerBottomSheet : BottomSheetDialogFragment() {
     ): View? {
 
         val myDrawerView =
-            layoutInflater.inflate(R.layout.layout_filter_pdf_bottom_sheet, null)
+            layoutInflater.inflate(R.layout.layout_navigation_drawer_bottom_sheet, null)
         val binding = LayoutNavigationDrawerBottomSheetBinding.inflate(
             layoutInflater,
             myDrawerView as ViewGroup,
@@ -50,7 +52,8 @@ class NavigationDrawerBottomSheet : BottomSheetDialogFragment() {
     }
 
     fun sendFeedback(){
-
+        val intent = Intent(requireContext(), SendFeedback::class.java)
+        startActivity(intent)
     }
 
     fun developerPage(){

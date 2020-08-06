@@ -12,6 +12,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.mainActivity.MainActivity
+import com.sudoajay.pdfviewer.activity.sendFeedback.SendFeedback
 import com.sudoajay.pdfviewer.helper.DarkModeBottomSheet
 import com.sudoajay.pdfviewer.helper.DeleteCache
 
@@ -85,7 +86,7 @@ class SettingsActivity : AppCompatActivity() {
             val sendFeedback =
                 findPreference("sendFeedback") as Preference?
             sendFeedback!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-
+                sendFeedback()
                 true
             }
 
@@ -177,6 +178,10 @@ class SettingsActivity : AppCompatActivity() {
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(link)
             startActivity(i)
+        }
+        private fun sendFeedback(){
+            val intent = Intent(requireContext(), SendFeedback::class.java)
+            startActivity(intent)
         }
 
 
