@@ -130,7 +130,7 @@ class SettingsActivity : AppCompatActivity() {
 
         }
         private fun showDarkMode() {
-            val darkModeBottomSheet = DarkModeBottomSheet(MainActivity.settingShortcutId)
+            val darkModeBottomSheet = DarkModeBottomSheet(MainActivity.settingId)
             darkModeBottomSheet.show(
                 childFragmentManager.beginTransaction(),
                 "darkModeBottomSheet"

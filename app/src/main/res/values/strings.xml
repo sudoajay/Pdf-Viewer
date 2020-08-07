@@ -195,8 +195,13 @@
 
 
 <!--    tile  setting-->
-    <string name="pdf_path_text" translatable="false">Pdf Path</string>
     <string name="is_pdf_active_text" translatable="false">isPdfActive</string>
+
+    <!--    save pdf recent pdf path-->
+    <string name="pdf_path_1_text" translatable="false">Pdf Path 1</string>
+    <string name="pdf_path_2_text" translatable="false">Pdf Path 2</string>
+    <string name="pdf_path_3_text" translatable="false">Pdf Path 3</string>
+
 
 
 </resources>

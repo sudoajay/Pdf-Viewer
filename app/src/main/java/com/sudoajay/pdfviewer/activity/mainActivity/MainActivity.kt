@@ -6,7 +6,10 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
 import android.graphics.Color
+import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +17,7 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -65,7 +69,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        if (!intent.action.isNullOrEmpty() && intent.action.toString() == settingShortcutId) {
+        if (!intent.action.isNullOrEmpty() && intent.action.toString() == settingId) {
             openMoreSetting()
         }
 
@@ -231,7 +235,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
     private fun showDarkMode() {
-        val darkModeBottomSheet = DarkModeBottomSheet(homeShortcutId)
+        val darkModeBottomSheet = DarkModeBottomSheet(homeId)
         darkModeBottomSheet.show(
             supportFragmentManager.beginTransaction(),
             darkModeBottomSheet.tag
@@ -555,6 +559,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
 
+
+
     /**
      * Showing popup menu when tapping on 3 dots
      */
@@ -584,10 +590,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
     companion object {
-        const val settingShortcutId = "settingShortcut"
-
-        //  Shortcut Info Id
-        const val homeShortcutId = "homeShortcut"
+        const val settingId = "setting"
+        const val homeId = "home"
     }
 
 

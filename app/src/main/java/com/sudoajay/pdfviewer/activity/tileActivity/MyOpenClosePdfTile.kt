@@ -13,7 +13,7 @@ import com.sudoajay.pdfviewer.helper.CustomToast
 
 
 @RequiresApi(Build.VERSION_CODES.N)
-class MyStartStopTile : TileService() {
+class MyOpenClosePdfTile : TileService() {
 
 
     override fun onClick() {
@@ -27,10 +27,10 @@ class MyStartStopTile : TileService() {
             getSharedPreferences(
                 "state",
                 Context.MODE_PRIVATE
-            ).getString(getString(R.string.pdf_path_text), "").toString()
+            ).getString(getString(R.string.pdf_path_1_text), "none").toString()
         val isActive =
             tile.state == Tile.STATE_ACTIVE
-        if (pdfPath.isBlank()) {
+        if (pdfPath == "none") {
             CustomToast.toastIt(
                 applicationContext,
                 getString(R.string.error_no_recent_pdf_file))
