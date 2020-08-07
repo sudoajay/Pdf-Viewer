@@ -3,6 +3,7 @@ package com.sudoajay.pdfviewer.activity.mainActivity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -87,6 +88,9 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         }
         Log.e("MainActivityViewModel" , "calling from  onCreate")
         callDataBaseConfig()
+
+
+
     }
 
     override fun onStart() {
@@ -95,8 +99,10 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
     override fun onResume() {
-        Log.e("MainActivityViewModel", " Activity - onResume ")
-
+        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putBoolean(
+                getString(R.string.is_pdf_active_text), false
+            ).apply()
         super.onResume()
     }
 
@@ -121,7 +127,10 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     override fun onDestroy() {
         Log.e("MainActivityViewModel", " Activity - onDestroy ")
-
+        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putBoolean(
+                getString(R.string.is_pdf_active_text), false
+            ).apply()
         super.onDestroy()
     }
     private fun setReference() {
@@ -558,6 +567,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         popup.setOnMenuItemClickListener(MyMenuItemClickListener(this, path))
         popup.show()
     }
+
+
 
     /**
      * Making notification bar transparent

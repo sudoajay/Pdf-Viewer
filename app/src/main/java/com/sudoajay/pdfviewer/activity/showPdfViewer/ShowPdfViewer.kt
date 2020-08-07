@@ -3,12 +3,12 @@ package com.sudoajay.pdfviewer.activity.showPdfViewer
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewTreeObserver
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -18,9 +18,6 @@ import androidx.databinding.DataBindingUtil
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.databinding.ActivityShowPdfViewerBinding
 import com.sudoajay.pdfviewer.helper.CustomToast
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class ShowPdfViewer : AppCompatActivity() {
 
@@ -28,7 +25,6 @@ class ShowPdfViewer : AppCompatActivity() {
     private lateinit var url: String
     private var uploadFile: ValueCallback<Uri>? = null
     private var uploadFileArray: ValueCallback<Array<Uri>>? = null
-    private var mOnScrollChangedListener: ViewTreeObserver.OnScrollChangedListener? = null
     private val actionGetContentCode = 100
     private val actionOpenDocumentCode = 101
 
@@ -46,6 +42,14 @@ class ShowPdfViewer : AppCompatActivity() {
 
         url = "file:///android_asset/web/viewer.html?file=$getPath"
 
+        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putString(
+                getString(R.string.pdf_path_text), getPath
+            ).apply()
+        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putBoolean(
+                getString(R.string.is_pdf_active_text), true
+            ).apply()
         setUpWebView()
     }
 
@@ -265,4 +269,11 @@ class ShowPdfViewer : AppCompatActivity() {
         )
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putBoolean(
+                getString(R.string.is_pdf_active_text), false
+            ).apply()
+    }
 }
