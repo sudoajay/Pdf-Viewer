@@ -39,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:fontFamily="@font/lato"
             android:maxLines="1"
             android:textColor="?attr/headingNormalTextColor" />
 
@@ -47,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:fontFamily="@font/lato"
             android:maxLines="1"
             android:textColor="?attr/headingNormalTextColor" />
     </LinearLayout>
