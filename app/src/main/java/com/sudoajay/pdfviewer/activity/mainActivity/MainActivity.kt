@@ -14,6 +14,7 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.*
@@ -24,7 +25,9 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +52,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     private var isDarkTheme: Boolean = false
     private val requestCode = 100
     private var TAG = "MainActivityClass"
+    private var doubleBackToExitPressedOnce = false
 
 
 
@@ -658,6 +662,27 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         popup.show()
     }
 
+
+    override fun onBackPressed() {
+        onBack()
+    }
+
+    private fun onBack() {
+        if (doubleBackToExitPressedOnce) {
+            closeApp()
+            return
+        }
+        doubleBackToExitPressedOnce = true
+        CustomToast.toastIt(applicationContext, "Click Back Again To Exit")
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    private fun closeApp() {
+        val homeIntent = Intent(Intent.ACTION_MAIN)
+        homeIntent.addCategory(Intent.CATEGORY_HOME)
+        homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(homeIntent)
+    }
 
 
     /**
