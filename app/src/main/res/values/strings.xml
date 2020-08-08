@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Pdf Viewer</string>
-    <string name="developer_name">Created by Sudo Ajay</string>
+    <string name="developer_name">Created by Abhishek &amp; Rishab</string>
 
     <!--    Dark Mode Bottom Sheet-->
     <string name="off_trans_text">Off</string>
@@ -159,6 +159,11 @@
     <string name="added_text">added </string>
     <string name="removed_text">removed </string>
     <string name="error_no_recent_pdf_file">You did not open any pdf file recently</string>
+
+<!--    Delete Alert Dialog-->
+    <string name="confirm_delete_title_text">Confirm Delete....</string>
+    <string name="delete_message_text">Are you sure you want to delete from storage ?</string>
+
 
 
 

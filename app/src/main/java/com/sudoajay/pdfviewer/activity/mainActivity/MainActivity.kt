@@ -2,6 +2,7 @@ package com.sudoajay.pdfviewer.activity.mainActivity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -18,6 +19,7 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -31,10 +33,7 @@ import com.sudoajay.pdfviewer.activity.BaseActivity
 import com.sudoajay.pdfviewer.activity.settingActivity.SettingsActivity
 import com.sudoajay.pdfviewer.activity.showPdfViewer.ShowPdfViewer
 import com.sudoajay.pdfviewer.databinding.ActivityMainBinding
-import com.sudoajay.pdfviewer.helper.CopyFile
-import com.sudoajay.pdfviewer.helper.CustomToast
-import com.sudoajay.pdfviewer.helper.DarkModeBottomSheet
-import com.sudoajay.pdfviewer.helper.InsetDivider
+import com.sudoajay.pdfviewer.helper.*
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidExternalStoragePermission
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidSdCardPermission
 import com.sudoajay.pdfviewer.helper.storagePermission.SdCardPath
@@ -485,11 +484,96 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         startActivity(intent)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addShortcut(path: String) {
+        val shortcutManager = getSystemService(ShortcutManager::class.java)
+
+        if (shortcutManager!!.isRequestPinShortcutSupported) {
+            // Assumes there's already a shortcut with the ID "my-shortcut".
+            // The shortcut must be enabled.
+            val pinShortcutInfo = ShortcutInfo.Builder(applicationContext, "my-shortcut")
+                .setIntent(
+                    Intent(
+                        applicationContext,
+                        ShowPdfViewer::class.java
+                    ).setAction(path)
+                ) // !!! intent's action must be set on oreo
+                .setShortLabel(File(path).name)
+                .setLongLabel(File(path).name)
+                .setIcon(
+                    Icon.createWithResource(
+                        applicationContext,
+                        R.drawable.ic_pdf
+                    )
+                )
+                .build()
+
+
+            val pinnedShortcutCallbackIntent =
+                shortcutManager.createShortcutResultIntent(pinShortcutInfo)
+
+            // Configure the intent so that your app's broadcast receiver gets
+            // the callback successfully.For details, see PendingIntent.getBroadcast().
+            val successCallback = PendingIntent.getBroadcast(
+                applicationContext, /* request code */ 0,
+                pinnedShortcutCallbackIntent, /* flags */ 0
+            )
+
+            shortcutManager.requestPinShortcut(
+                pinShortcutInfo,
+                successCallback.intentSender
+            )
+        }
+
+    }
+
+    fun addShortcutBelowOreo(path: String) {
+        val shortcutIntent = Intent(applicationContext, MainActivity::class.java)
+        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val addIntent = Intent()
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent)
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, File(path).name)
+        addIntent.putExtra(File(path).name, false)
+        addIntent.putExtra(
+            Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+            Intent.ShortcutIconResource.fromContext(applicationContext, R.drawable.ic_pdf)
+        )
+        addIntent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
+        applicationContext.sendBroadcast(addIntent)
+    }
+
+     fun alertDelete(path:String) {
+        val builder: AlertDialog.Builder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                AlertDialog.Builder(this@MainActivity, if (!isDarkTheme) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert
+                )
+            } else {
+                AlertDialog.Builder(this@MainActivity)
+            }
+        builder.setTitle(applicationContext.getString(R.string.confirm_delete_title_text))
+            .setMessage(applicationContext.getString(R.string.delete_message_text))
+            .setPositiveButton("Yes"){ _, _ ->
+                if (path.isNotEmpty()) {
+                    if (path.startsWith("content:"))
+                        DeleteFile.deleteUri(applicationContext, path)
+                    else DeleteFile.delete(applicationContext, path)
+                    callDataBaseConfig()
+                }
+            }
+            .setNegativeButton("No") { _, _ ->
+
+            }
+            .setIcon(R.drawable.ic_error)
+            .setCancelable(true)
+            .show()
+    }
+
     private fun shareTheFile(file: File) {
         try {
             val filename = file.name
             val fileLocation = File(cacheDir, filename)
-            Log.e(TAG , fileLocation.absolutePath)
+            Log.e(TAG, fileLocation.absolutePath)
             val path = FileProvider.getUriForFile(
                 this,
                 this.applicationContext.packageName + ".provider",

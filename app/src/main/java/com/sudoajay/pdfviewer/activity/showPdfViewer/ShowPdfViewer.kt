@@ -7,12 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
+import android.graphics.Color
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -21,6 +23,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.sudoajay.pdfviewer.R
+import com.sudoajay.pdfviewer.activity.BaseActivity
 import com.sudoajay.pdfviewer.activity.mainActivity.MainActivity
 import com.sudoajay.pdfviewer.databinding.ActivityShowPdfViewerBinding
 import com.sudoajay.pdfviewer.helper.CustomToast
@@ -35,11 +38,18 @@ class ShowPdfViewer : AppCompatActivity() {
     private var uploadFileArray: ValueCallback<Array<Uri>>? = null
     private val actionGetContentCode = 100
     private val actionOpenDocumentCode = 101
-
+    private  var isDarkTheme: Boolean =false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isDarkTheme = BaseActivity.isDarkMode(applicationContext)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!isDarkTheme )
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
         setContentView(R.layout.activity_show_pdf_viewer)
+
+        changeStatusBarColor()
         val intent = intent
         if (intent != null) {
             getPath = intent.action.toString()
@@ -400,6 +410,20 @@ class ShowPdfViewer : AppCompatActivity() {
 
         shortcutManager!!.dynamicShortcuts = listShortcutInfo
     }
+
+    /**
+     * Making notification bar transparent
+     */
+    private fun changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!isDarkTheme) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = Color.TRANSPARENT
+            }
+        }
+    }
+
 
     companion object {
         const val pdfPathShortcutId1 = "pdfPath1"
