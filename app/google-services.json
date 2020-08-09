@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "650220322798",
+    "firebase_url": "https://pdf-viewer-8ee02.firebaseio.com",
+    "project_id": "pdf-viewer-8ee02",
+    "storage_bucket": "pdf-viewer-8ee02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650220322798:android:0f351713665fb24975d8ff",
+        "android_client_info": {
+          "package_name": "com.sudoajay.pdfviewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650220322798-7pdudt6g61fph8o6ug6gi9ukmbnv1mvs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sudoajay.pdfviewer",
+            "certificate_hash": "76a725010c7a7213bf6511960e6393c4299e865e"
+          }
+        },
+        {
+          "client_id": "650220322798-acltbcnjh6c7mpgf7eu36lae5pkipjih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBfFQyoI6kyPKdnOeTtxiIZP1DlMtaNTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650220322798-acltbcnjh6c7mpgf7eu36lae5pkipjih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
