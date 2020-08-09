@@ -25,17 +25,18 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.BaseActivity
 import com.sudoajay.pdfviewer.activity.settingActivity.SettingsActivity
 import com.sudoajay.pdfviewer.activity.showPdfViewer.ShowPdfViewer
 import com.sudoajay.pdfviewer.databinding.ActivityMainBinding
+import com.sudoajay.pdfviewer.firebase.NotificationChannels.notificationOnCreate
 import com.sudoajay.pdfviewer.helper.*
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidExternalStoragePermission
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidSdCardPermission
@@ -77,25 +78,21 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         }
 
 
-        setReference()
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
 
-        androidExternalStoragePermission =
-            AndroidExternalStoragePermission(applicationContext, this)
-        //        Take Permission
+                // Get new Instance ID token
+                val token = task.result?.token
 
-        if (!androidExternalStoragePermission.isExternalStorageWritable
-            && SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)
-        ) {
-            showSelectOption()
-            Log.e(TAG, "No isExternalStorageWritable")
-        } else {
-            androidExternalStoragePermission.callPermission()
-            Log.e(TAG, "Yes isExternalStorageWritable")
-
-        }
-        Log.e("MainActivityViewModel" , "calling from  onCreate")
-        callDataBaseConfig()
-
+                // Log and toast
+                val msg = getString(R.string.msg_token_fmt, token)
+                Log.d(TAG, msg)
+                CustomToast.toastIt(applicationContext, msg)
+            })
 
 
     }
@@ -106,10 +103,34 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
     override fun onResume() {
+
+        setReference()
+
+        androidExternalStoragePermission =
+            AndroidExternalStoragePermission(applicationContext, this)
+        //        Take Permission
+
+        if (!androidExternalStoragePermission.isExternalStorageWritable ||
+            SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)
+        ) {
+            showSelectOption()
+            Log.e(TAG, "No isExternalStorageWritable")
+        } else {
+            androidExternalStoragePermission.callPermission()
+            Log.e(TAG, "Yes isExternalStorageWritable")
+
+        }
+        callDataBaseConfig()
+
         getSharedPreferences("state", Context.MODE_PRIVATE).edit()
             .putBoolean(
                 getString(R.string.is_pdf_active_text), false
             ).apply()
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationOnCreate(applicationContext)
+        }
         super.onResume()
     }
 
@@ -228,11 +249,11 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             .build()
     }
 
-    fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
+    private fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
 
     private fun isDataEmpty(it:Int){
         CoroutineScope(Dispatchers.Main).launch {
-            if(it == 0  && viewModel.isEmpty())
+            if(it == 0  && viewModel.isEmpty() &&  SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.scan_file_text))
                 CustomToast.toastIt(applicationContext,getString(R.string.empty_list_text))
         }
     }

@@ -165,6 +165,10 @@
     <string name="delete_message_text">Are you sure you want to delete from storage ?</string>
 
 
+<!--    Notification channel-->
+    <string name="notifications_group_service">Service control</string>
+    <string name="default_notification_channel_id" translatable="false">FireBase Channel id</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 
 
     <!--        No Trans-->
@@ -206,6 +210,9 @@
     <string name="pdf_path_1_text" translatable="false">Pdf Path 1</string>
     <string name="pdf_path_2_text" translatable="false">Pdf Path 2</string>
     <string name="pdf_path_3_text" translatable="false">Pdf Path 3</string>
+
+
+<!--    FireBase Notification-->
 
 
 
