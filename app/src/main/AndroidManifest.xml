@@ -22,8 +22,7 @@
 
         <activity
             android:name=".activity.mainActivity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleInstance">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,9 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.BaseActivity"
-            android:launchMode="singleInstance"/>
-
+            android:name=".activity.BaseActivity" />
         <activity
             android:name=".activity.settingActivity.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -41,12 +38,10 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.showPdfViewer.ShowPdfViewer"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleInstance"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.sendFeedback.SendFeedback"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleInstance"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".activity.tileActivity.MyOpenClosePdfTile"
