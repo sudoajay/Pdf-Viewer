@@ -29,8 +29,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.BaseActivity
 import com.sudoajay.pdfviewer.activity.settingActivity.SettingsActivity
@@ -54,7 +52,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     private val requestCode = 100
     private var TAG = "MainActivityClass"
     private var doubleBackToExitPressedOnce = false
-
+    private var pagingAppRecyclerAdapter: PagingAppRecyclerAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,10 +71,12 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.clearTheDatabaseCompletely()
+
+
         if (!intent.action.isNullOrEmpty() && intent.action.toString() == settingId) {
             openMoreSetting()
         }
-
 
 //        FirebaseInstanceId.getInstance().instanceId
 //            .addOnCompleteListener(OnCompleteListener { task ->
@@ -98,7 +98,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
     override fun onStart() {
-        Log.e("MainActivityViewModel", " Activity - onStart ")
+        Log.e(TAG, " Activity - onStart ")
         super.onStart()
     }
 
@@ -106,6 +106,15 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
         setReference()
 
+        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putBoolean(
+                getString(R.string.is_pdf_active_text), false
+            ).apply()
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationOnCreate(applicationContext)
+        }
         androidExternalStoragePermission =
             AndroidExternalStoragePermission(applicationContext, this)
         //        Take Permission
@@ -118,47 +127,37 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         } else {
             androidExternalStoragePermission.callPermission()
             Log.e(TAG, "Yes isExternalStorageWritable")
-
+            callDataBaseConfig()
         }
-        callDataBaseConfig()
-
-        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putBoolean(
-                getString(R.string.is_pdf_active_text), false
-            ).apply()
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationOnCreate(applicationContext)
-        }
+
         super.onResume()
     }
 
     override fun onPause() {
-        Log.e("MainActivityViewModel", " Activity - onPause ")
+        Log.e(TAG, " Activity - onPause ")
 
         super.onPause()
     }
 
 
     override fun onStop() {
-        Log.e("MainActivityViewModel", " Activity - onStop ")
+        Log.e(TAG, " Activity - onStop ")
 
         super.onStop()
     }
     override fun onRestart() {
-        Log.e("MainActivityViewModel", " Activity - onRestart ")
+        Log.e(TAG, " Activity - onRestart ")
 
         super.onRestart()
     }
 
 
     override fun onDestroy() {
-        Log.e("MainActivityViewModel", " Activity - onDestroy ")
-        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putBoolean(
-                getString(R.string.is_pdf_active_text), false
-            ).apply()
+        Log.e(TAG, " Activity - onDestroy ")
+        pagingAppRecyclerAdapter?.submitList(null)
+
         super.onDestroy()
     }
     private fun setReference() {
@@ -206,18 +205,18 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(this)
-
+        pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(this)
 
         viewModel.appList!!.observe(this, androidx.lifecycle.Observer {
 
             for (x in it) {
-                Log.e("MainActivityViewModel", x.name)
+                Log.e(TAG, x.name)
             }
 
 
-            pagingAppRecyclerAdapter.submitList(it)
+            pagingAppRecyclerAdapter!!.submitList(it)
             recyclerView.adapter = pagingAppRecyclerAdapter
+
             if (binding.swipeRefresh.isRefreshing)
                 binding.swipeRefresh.isRefreshing = false
 
@@ -228,7 +227,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.onRefresh()
-            isDataEmpty(pagingAppRecyclerAdapter.itemCount)
+            isDataEmpty(pagingAppRecyclerAdapter!!.itemCount)
 
         }
 

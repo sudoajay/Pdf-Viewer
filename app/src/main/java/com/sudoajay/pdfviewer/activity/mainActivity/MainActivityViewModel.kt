@@ -17,7 +17,6 @@ import com.sudoajay.pdfviewer.helper.ScanPdf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivityViewModel (application: Application) : AndroidViewModel(application) {
 
@@ -50,27 +49,30 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
     fun databaseConfiguration(activity: MainActivity) {
         filterChanges()
         getHideProgress()
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.e(TAG, pdfRepository.getCount().toString() + " --- After deltetion")
+            if (isEmpty())
+                pdfDatabaseConfiguration(activity)
+            Log.e(
+                TAG,
+                pdfRepository.getCount().toString() + " --- After pdfDatabaseConfiguration"
+            )
+            hideProgress!!.postValue(false)
+            filterChanges.postValue(_application.getString(R.string.filter_changes_text))
 
-                Log.e(TAG, pdfRepository.getCount().toString() + " --- before deltetion")
-                withContext(Dispatchers.Default) {
-                    Log.e(TAG, "Deleteing File ")
-                    pdfRepository.deleteAll()
-                }
-                Log.e(TAG, pdfRepository.getCount().toString() + " --- After deltetion")
-                if (isEmpty())
-                    pdfDatabaseConfiguration(activity)
-                Log.e(TAG, pdfRepository.getCount().toString() + " --- After pdfDatabaseConfiguration")
-                hideProgress!!.postValue(false)
-                filterChanges.postValue(_application.getString(R.string.filter_changes_text))
-            }
 
         }
 
     }
 
-    private suspend fun pdfDatabaseConfiguration(activity: MainActivity){
+    fun clearTheDatabaseCompletely() {
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.e(TAG, "Deleteing File ")
+            pdfRepository.deleteAll()
+        }
+    }
+
+    private suspend fun pdfDatabaseConfiguration(activity: MainActivity) {
         Log.e(TAG, " Scan The FIle")
         val scanPdf = ScanPdf(activity, pdfRepository)
         //             Its supports till android 9 & api 28
