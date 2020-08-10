@@ -78,21 +78,21 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         }
 
 
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(TAG, "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new Instance ID token
-                val token = task.result?.token
-
-                // Log and toast
-                val msg = getString(R.string.msg_token_fmt, token)
-                Log.d(TAG, msg)
-                CustomToast.toastIt(applicationContext, msg)
-            })
+//        FirebaseInstanceId.getInstance().instanceId
+//            .addOnCompleteListener(OnCompleteListener { task ->
+//                if (!task.isSuccessful) {
+//                    Log.w(TAG, "getInstanceId failed", task.exception)
+//                    return@OnCompleteListener
+//                }
+//
+//                // Get new Instance ID token
+//                val token = task.result?.token
+//
+//                // Log and toast
+//                val msg = getString(R.string.msg_token_fmt, token)
+//                Log.d(TAG, msg)
+//                CustomToast.toastIt(applicationContext, msg)
+//            })
 
 
     }
@@ -214,7 +214,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             for (x in it) {
                 Log.e("MainActivityViewModel", x.name)
             }
-            Log.e("MainActivityViewModel", "_________________________________________________________")
+
 
             pagingAppRecyclerAdapter.submitList(it)
             recyclerView.adapter = pagingAppRecyclerAdapter
