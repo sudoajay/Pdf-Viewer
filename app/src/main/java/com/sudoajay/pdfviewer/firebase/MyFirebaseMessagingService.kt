@@ -4,44 +4,52 @@ package com.sudoajay.pdfviewer.firebase
 import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.sudoajay.pdfviewer.R
-import com.sudoajay.pdfviewer.firebase.NotificationChannels.notificationOnCreate
+import com.sudoajay.pdfviewer.activity.mainActivity.MainActivity
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        val data = remoteMessage.data
+        val url = data["Url"]
+        if (remoteMessage.notification != null) {
+            val notificationCompat: NotificationCompat.Builder =
+                NotificationCompat.Builder(
+                    applicationContext,
+                    NotificationChannels.SERVICE_OPEN_URL
+                )
+            notificationCompat.setSmallIcon(R.drawable.ic_pdf)
 
-//    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-//        val data = remoteMessage.data
-//        val url = data["Click_Action"]
-//        if (remoteMessage.notification != null && url!!.isNotEmpty() && url.isNotBlank()) {
-//
-//
-//            val notificationCompat: NotificationCompat.Builder =
-//                NotificationCompat.Builder(applicationContext, NotificationChannels.SERVICE_OPEN_URL)
-//            notificationCompat.setSmallIcon(R.drawable.ic_pdf)
-//
-//            notificationCompat.setContentIntent(createPendingIntent(url.toString()))
-//
-//            FirebaseNotification(applicationContext).notifyCompat(
-//                remoteMessage.notification,
-//                notificationCompat
-//            )
-//        }
-//    }
+            notificationCompat.setContentIntent(createPendingIntent(url.toString()))
 
-    private fun createPendingIntent(link:String): PendingIntent? {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(link)
-        return PendingIntent.getActivity(
-            this, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
+            FirebaseNotification(applicationContext).notifyCompat(
+                remoteMessage.notification,
+                notificationCompat
+            )
+        }
+    }
+
+    private fun createPendingIntent(link: String): PendingIntent? {
+        return if (link.isNotBlank() || link.isNotEmpty()) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(link)
+            PendingIntent.getActivity(
+                this, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            PendingIntent.getActivity(
+                this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT
+            )
+        }
     }
 
     override fun onNewToken(token: String) {

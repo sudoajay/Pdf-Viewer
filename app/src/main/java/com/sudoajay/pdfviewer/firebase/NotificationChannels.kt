@@ -13,7 +13,7 @@ import com.sudoajay.pdfviewer.R
  */
 object NotificationChannels {
     private const val GROUP_SERVICE = "com.sudoajay.dnswidget.notifications.service"
-    private const val SERVICE_OPEN_URL = "com.sudoajay.dnswidget.notifications.open_Url"
+    const val SERVICE_OPEN_URL = "com.sudoajay.dnswidget.notifications.open_Url"
 
 
     @RequiresApi(Build.VERSION_CODES.O)

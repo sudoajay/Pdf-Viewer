@@ -3,17 +3,23 @@ package com.sudoajay.pdfviewer.firebase
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.RingtoneManager
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.RemoteMessage
 import com.sudoajay.pdfviewer.R
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 class FirebaseNotification(var context: Context) {
 
     private var notificationManager: NotificationManager? = null
-    var notification: Notification? = null
+    private var notification: Notification? = null
 
     fun notifyCompat(
         remoteMessage: RemoteMessage.Notification?,
@@ -22,6 +28,7 @@ class FirebaseNotification(var context: Context) {
 
         val title = remoteMessage!!.title
         val notificationText = remoteMessage.body
+        val imageUrl = remoteMessage.imageUrl.toString()
 
         // now check for null notification manger
         if (notificationManager == null) {
@@ -38,14 +45,20 @@ class FirebaseNotification(var context: Context) {
             .setDefaults(Notification.DEFAULT_ALL) // Set required fields, including the small icon, the
             .setContentTitle(title)
             .setContentText(notificationText)
-
-            .setOngoing(true)
             .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_MIN)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setSound(uri) // Provide a large icon, shown with the notification in the
 
             .color = ContextCompat.getColor(context, R.color.primaryAppColor)
         // If this notification relates to a past or upcoming event, you
+            if (imageUrl.isNotEmpty()) {
+                Log.e("MainActivityClass", imageUrl)
+
+                val bpStyle =
+                    NotificationCompat.BigPictureStyle()
+                bpStyle.bigPicture(getBitmapFromURL(imageUrl)).build()
+                builder.setStyle(bpStyle)
+            }
 
         // check if there ia data with empty
 // more and view button classification
@@ -59,6 +72,19 @@ class FirebaseNotification(var context: Context) {
 
     private fun notifyNotification(notification: Notification) {
         notificationManager!!.notify(0, notification)
+    }
+
+    private fun getBitmapFromURL(strURL: String?): Bitmap? {
+        return try {
+            val url = URL(strURL)
+            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            connection.doInput = true
+            connection.connect()
+            val input: InputStream = connection.inputStream
+            BitmapFactory.decodeStream(input)
+        } catch (e: Exception) {
+            null
+        }
     }
 
 }
