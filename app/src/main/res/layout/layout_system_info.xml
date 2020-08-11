@@ -45,7 +45,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/lato"
                         android:text="@string/system_info_text"
                         android:textSize="20sp"
                         android:textColor="?attr/headingNormalTextColor"
@@ -72,7 +71,6 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:text="@string/device_text"
-                        android:fontFamily="@font/lato"
                         android:textColor="?attr/headingNormalTextColor"
                         app:layout_constraintBottom_toBottomOf="@+id/deviceInfo_View"
                         app:layout_constraintStart_toStartOf="@+id/deviceInfo_View"
@@ -84,7 +82,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/lato"
                         android:textColor="?attr/primaryAppColor"
                         app:layout_constraintBottom_toBottomOf="@+id/deviceInfo_View"
                         app:layout_constraintEnd_toEndOf="@+id/deviceInfo_View"
@@ -96,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginTop="2dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:background="?attr/dialogBgColorInfo"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -109,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/headingNormalTextColor"
                         android:text="@string/os_api_level_text"
                         app:layout_constraintBottom_toBottomOf="@+id/osApiLevel_View"
@@ -122,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/primaryAppColor"
                         app:layout_constraintBottom_toBottomOf="@+id/osApiLevel_View"
                         app:layout_constraintEnd_toEndOf="@+id/osApiLevel_View"
@@ -135,7 +132,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="2dp"
                         android:background="?attr/dialogBgColorInfo"
-                        android:fontFamily="@font/lato"
+                        
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -147,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/headingNormalTextColor"
                         android:text="@string/app_version_text"
                         app:layout_constraintBottom_toBottomOf="@+id/appVersion_View"
@@ -160,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/primaryAppColor"
                         app:layout_constraintBottom_toBottomOf="@+id/appVersion_View"
                         app:layout_constraintEnd_toEndOf="@+id/appVersion_View"
@@ -173,7 +170,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="2dp"
                         android:background="?attr/dialogBgColorInfo"
-                        android:fontFamily="@font/lato"
+                        
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +183,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:textColor="?attr/headingNormalTextColor"
-                        android:fontFamily="@font/lato"
+                        
                         android:text="@string/language_text"
                         app:layout_constraintBottom_toBottomOf="@+id/language_View"
                         app:layout_constraintStart_toStartOf="parent"
@@ -198,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/primaryAppColor"
                         app:layout_constraintBottom_toBottomOf="@+id/language_View"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +208,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="2dp"
                         android:background="?attr/dialogBgColorInfo"
-                        android:fontFamily="@font/lato"
+                        
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -223,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/headingNormalTextColor"
                         android:text="@string/total_memory_text"
                         app:layout_constraintBottom_toBottomOf="@+id/totalMemory_View"
@@ -237,7 +234,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/primaryAppColor"
                         app:layout_constraintBottom_toBottomOf="@+id/totalMemory_View"
                         app:layout_constraintEnd_toEndOf="@+id/totalMemory_View"
@@ -250,7 +247,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="2dp"
                         android:background="?attr/dialogBgColorInfo"
-                        android:fontFamily="@font/lato"
+                        
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -264,7 +261,7 @@
                         android:layout_marginLeft="8dp"
                         android:textColor="?attr/headingNormalTextColor"
                         android:text="@string/free_memory_text"
-                        android:fontFamily="@font/lato"
+                        
                         app:layout_constraintBottom_toBottomOf="@+id/freeMemory_View"
                         app:layout_constraintStart_toStartOf="@+id/freeMemory_View"
                         app:layout_constraintTop_toTopOf="@+id/freeMemory_View"
@@ -276,7 +273,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/primaryAppColor"
                         app:layout_constraintBottom_toBottomOf="@+id/freeMemory_View"
                         app:layout_constraintEnd_toEndOf="@+id/freeMemory_View"
@@ -292,7 +289,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="2dp"
                         android:background="?attr/dialogBgColorInfo"
-                        android:fontFamily="@font/lato"
+                        
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -305,7 +302,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:text="@string/screen_Text"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/headingNormalTextColor"
                         app:layout_constraintBottom_toBottomOf="@+id/screen_View"
                         app:layout_constraintStart_toStartOf="parent"
@@ -319,7 +316,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/primaryAppColor"
                         app:layout_constraintBottom_toBottomOf="@+id/screen_View"
                         app:layout_constraintEnd_toEndOf="@+id/freeMemory_View"
@@ -334,7 +331,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="2dp"
                         android:background="?attr/dialogBgColorInfo"
-                        android:fontFamily="@font/lato"
+                        
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -347,7 +344,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:text="@string/network_type_text"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/headingNormalTextColor"
                         app:layout_constraintBottom_toBottomOf="@+id/networkType_View"
                         app:layout_constraintStart_toStartOf="parent"
@@ -361,7 +358,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/lato"
+                        
                         android:textColor="?attr/primaryAppColor"
                         app:layout_constraintBottom_toBottomOf="@+id/networkType_View"
                         app:layout_constraintEnd_toEndOf="@+id/freeMemory_View"
@@ -379,7 +376,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
                         android:text="@string/ok_text"
-                        android:fontFamily="@font/lato"
+                        
                         android:onClick="@{() -> dialog.dismiss()}"
                         android:textColor="?attr/boxTextColor"
                         android:visibility="visible"
