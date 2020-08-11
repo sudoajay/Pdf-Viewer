@@ -17,8 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_pdf"
-        android:tint="?attr/pdfRedColor"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        app:tint="?attr/pdfRedColor" />
 
     <LinearLayout
         android:id="@+id/textContainer_linearLayout"
@@ -62,7 +62,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_more_option"
-        android:tint="?attr/headingNormalTextColor"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        app:tint="?attr/headingNormalTextColor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

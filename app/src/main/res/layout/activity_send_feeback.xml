@@ -101,27 +101,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:tint="?attr/boxTextColor"
-
                 app:layout_constraintBottom_toBottomOf="@+id/addScreenshot_TextView"
                 app:layout_constraintStart_toEndOf="@+id/addScreenshot_TextView"
                 app:layout_constraintTop_toTopOf="@+id/addScreenshot_TextView"
                 app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/ic_image_small"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                app:tint="?attr/boxTextColor" />
 
             <ImageView
                 android:id="@+id/addScreenshotLarge_ImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tint="?attr/boxTextColor"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/image_Button"
                 app:layout_constraintEnd_toEndOf="@+id/image_Button"
                 app:layout_constraintStart_toStartOf="@+id/image_Button"
                 app:layout_constraintTop_toBottomOf="@+id/image_Button"
                 app:srcCompat="@drawable/ic_image_large"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                app:tint="?attr/boxTextColor" />
 
             <TextView
                 android:id="@+id/systemInfo_TextView"
