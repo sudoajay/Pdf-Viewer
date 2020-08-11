@@ -13,7 +13,7 @@ import com.sudoajay.pdfviewer.R
  */
 object NotificationChannels {
     private const val GROUP_SERVICE = "com.sudoajay.dnswidget.notifications.service"
-    const val SERVICE_OPEN_URL = "com.sudoajay.dnswidget.notifications.open_Url"
+    const val PUSH_NOTIFICATION = "com.sudoajay.dnswidget.push.notifications"
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -29,11 +29,11 @@ object NotificationChannels {
         )
 
         val runningChannel = NotificationChannel(
-            SERVICE_OPEN_URL,
-            context.getString(R.string.default_notification_channel_id),
+            this.PUSH_NOTIFICATION,
+            context.getString(R.string.firebase_channel_id),
             NotificationManager.IMPORTANCE_DEFAULT
         )
-        runningChannel.description = context.getString(R.string.default_notification_channel_id)
+        runningChannel.description = context.getString(R.string.firebase_channel_id)
         runningChannel.group = GROUP_SERVICE
         runningChannel.setShowBadge(false)
         notificationManager.createNotificationChannel(runningChannel)

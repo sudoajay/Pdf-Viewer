@@ -51,14 +51,14 @@ class FirebaseNotification(var context: Context) {
 
             .color = ContextCompat.getColor(context, R.color.primaryAppColor)
         // If this notification relates to a past or upcoming event, you
-            if (imageUrl.isNotEmpty()) {
-                Log.e("MainActivityClass", imageUrl)
+        if (imageUrl != "null") {
+            Log.e("MainActivityClass", imageUrl)
 
-                val bpStyle =
-                    NotificationCompat.BigPictureStyle()
-                bpStyle.bigPicture(getBitmapFromURL(imageUrl)).build()
-                builder.setStyle(bpStyle)
-            }
+            val bpStyle =
+                NotificationCompat.BigPictureStyle()
+            bpStyle.bigPicture(getBitmapFromURL(imageUrl)).build()
+            builder.setStyle(bpStyle)
+        }
 
         // check if there ia data with empty
 // more and view button classification

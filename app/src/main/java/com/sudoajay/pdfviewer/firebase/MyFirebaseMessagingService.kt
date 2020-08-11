@@ -21,7 +21,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val notificationCompat: NotificationCompat.Builder =
                 NotificationCompat.Builder(
                     applicationContext,
-                    NotificationChannels.SERVICE_OPEN_URL
+                    NotificationChannels.PUSH_NOTIFICATION
                 )
             notificationCompat.setSmallIcon(R.drawable.ic_pdf)
 

@@ -167,7 +167,7 @@
 
 <!--    Notification channel-->
     <string name="notifications_group_service">Service control</string>
-    <string name="default_notification_channel_id" translatable="false">FireBase Channel id</string>
+    <string name="firebase_channel_id" translatable="false">Push Notification</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 
 
