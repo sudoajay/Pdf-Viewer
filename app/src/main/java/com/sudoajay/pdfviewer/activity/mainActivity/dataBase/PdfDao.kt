@@ -31,6 +31,9 @@ interface PdfDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(pdf: Pdf)
 
+    @Query("DELETE FROM PdfTable Where path = :path")
+    suspend fun deleteRowFromPath(path:String)
+
 
     @Query("DELETE FROM PdfTable")
     suspend fun deleteAll()

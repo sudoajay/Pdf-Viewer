@@ -71,9 +71,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.clearTheDatabaseCompletely()
-
-
         if (!intent.action.isNullOrEmpty() && intent.action.toString() == settingId) {
             openMoreSetting()
         }
@@ -249,6 +246,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
     private fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
+
 
     private fun isDataEmpty(it:Int){
         CoroutineScope(Dispatchers.Main).launch {
@@ -582,7 +580,10 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                     if (path.startsWith("content:"))
                         DeleteFile.deleteUri(applicationContext, path)
                     else DeleteFile.delete(applicationContext, path)
-                    callDataBaseConfig()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.pdfRepository.deleteRowFromPath(path)
+                        viewModel.onRefresh()
+                    }
                 }
             }
             .setNegativeButton("No") { _, _ ->

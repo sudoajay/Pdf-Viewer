@@ -60,6 +60,10 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
         return pdfDao.getCount()
     }
 
+    suspend fun deleteRowFromPath(path:String){
+        pdfDao.deleteRowFromPath(path)
+    }
+
     suspend fun deleteAll(){
         pdfDao.deleteAll()
     }

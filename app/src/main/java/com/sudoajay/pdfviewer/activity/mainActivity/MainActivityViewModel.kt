@@ -24,7 +24,7 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
     var appList: LiveData<PagedList<Pdf>>? = null
     var TAG = "MainActivityViewModel"
     private var _application = application
-    private var pdfRepository: PdfRepository
+    var pdfRepository: PdfRepository
 
     private val filterChanges: MutableLiveData<String> = MutableLiveData()
     private var hideProgress: MutableLiveData<Boolean>? = null
@@ -47,6 +47,7 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
         filterChanges.value = filter
     }
     fun databaseConfiguration(activity: MainActivity) {
+        clearTheDatabaseCompletely()
         filterChanges()
         getHideProgress()
         CoroutineScope(Dispatchers.IO).launch {
@@ -65,7 +66,7 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
     }
 
-    fun clearTheDatabaseCompletely() {
+    private fun clearTheDatabaseCompletely() {
         CoroutineScope(Dispatchers.IO).launch {
             Log.e(TAG, "Deleteing File ")
             pdfRepository.deleteAll()
@@ -85,9 +86,6 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
     fun onRefresh() {
         appList!!.value!!.dataSource.invalidate()
-        CoroutineScope(Dispatchers.Main).launch {
-
-        }
     }
 
     suspend fun isEmpty(): Boolean {
