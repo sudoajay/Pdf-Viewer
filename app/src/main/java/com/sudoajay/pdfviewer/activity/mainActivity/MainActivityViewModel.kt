@@ -41,6 +41,9 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
         appList = Transformations.switchMap(filterChanges) {
             pdfRepository.handleFilterChanges(it)
         }
+        filterChanges()
+        getHideProgress()
+        hideProgress!!.value = false
 
     }
     fun filterChanges(filter: String = _application.getString(R.string.filter_changes_text)) {
@@ -48,8 +51,6 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
     }
     fun databaseConfiguration(activity: MainActivity) {
         clearTheDatabaseCompletely()
-        filterChanges()
-        getHideProgress()
         CoroutineScope(Dispatchers.IO).launch {
             Log.e(TAG, pdfRepository.getCount().toString() + " --- After deltetion")
             if (isEmpty())
@@ -68,7 +69,6 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
     private fun clearTheDatabaseCompletely() {
         CoroutineScope(Dispatchers.IO).launch {
-            Log.e(TAG, "Deleteing File ")
             pdfRepository.deleteAll()
         }
     }
@@ -90,7 +90,6 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
     suspend fun isEmpty(): Boolean {
         return pdfRepository.getCount() == 0
-
     }
 
     fun getHideProgress(): LiveData<Boolean> {
