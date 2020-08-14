@@ -56,6 +56,24 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
         pdfDao.insert(pdf)
     }
 
+    suspend fun isPresent(path: String): Int {
+        return pdfDao.isPresent(path)
+    }
+    suspend fun setDefaultValueInstall(){
+        pdfDao.setDefaultValueInstall()
+    }
+
+    suspend fun setInstallValue(path: String) {
+        pdfDao.updateInstalledByPath(path)
+    }
+
+    suspend fun removeUninstallAppFromDB(){
+        for( i in pdfDao.getUninstallList()){
+            pdfDao.deleteRow(i)
+        }
+    }
+
+
     suspend fun getCount(): Int {
         return pdfDao.getCount()
     }

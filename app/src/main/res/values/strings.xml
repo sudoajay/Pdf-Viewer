@@ -170,6 +170,11 @@
     <string name="firebase_channel_id" translatable="false">Push Notification</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 
+<!--    scan sd card-->
+    <string name="scan_sd_card_text">Detect Sd Card</string>
+    <string name="confirm_sd_card_permission_title_text">Detected Sd Card !!</string>
+    <string name="sd_card_permission_text">Select Sd Card storage For further Scanning Process</string>
+
 
     <!--        No Trans-->
 
@@ -212,7 +217,8 @@
     <string name="pdf_path_3_text" translatable="false">Pdf Path 3</string>
 
 
-<!--    FireBase Notification-->
+<!--    sd card first time detect-->
+    <string name="first_time_sd_card_detect" translatable="false">isFirstTimeSdCardDetect</string>
 
 
 

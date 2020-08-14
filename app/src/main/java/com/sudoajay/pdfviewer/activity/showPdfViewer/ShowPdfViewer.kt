@@ -338,7 +338,7 @@ class ShowPdfViewer : AppCompatActivity() {
         val pdfShortcut1: ShortcutInfo?
         val pdfShortcut2: ShortcutInfo?
         val pdfShortcut3: ShortcutInfo?
-        if (pdfList[0] != "none") {
+        if (pdfList[0] != "none" && File(pdfList[0]).exists()) {
             pdfShortcut1 = ShortcutInfo.Builder(
                 applicationContext,
                 pdfPathShortcutId1
@@ -360,7 +360,7 @@ class ShowPdfViewer : AppCompatActivity() {
                 .build()
             listShortcutInfo.add(pdfShortcut1)
         }
-        if (pdfList[1] != "none") {
+        if (pdfList[1] != "none" && File(pdfList[1]).exists()) {
             pdfShortcut2 =
                 ShortcutInfo.Builder(
                     applicationContext,
@@ -383,7 +383,7 @@ class ShowPdfViewer : AppCompatActivity() {
                     .build()
             listShortcutInfo.add(pdfShortcut2)
         }
-        if (pdfList[2] != "none") {
+        if (pdfList[2] != "none" && File(pdfList[2]).exists()) {
             pdfShortcut3 =
                 ShortcutInfo.Builder(
                     applicationContext,

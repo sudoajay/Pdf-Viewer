@@ -20,21 +20,26 @@ class ScanPdf(private var activity: Activity, private var pdfRepository: PdfRepo
     private var androidSdCardPermission =
         AndroidSdCardPermission(activity.applicationContext, activity)
 
-
     suspend fun scanUsingFile() {
 
         val externalDir =
             AndroidExternalStoragePermission.getExternalPath(activity.applicationContext)
         val sdCardDir = AndroidSdCardPermission.getSdCardPath(activity.applicationContext)
 
+        //        Here we Just add default value of install Pdf File
+        pdfRepository.setDefaultValueInstall()
 
-//      Its supports till android 9 & api 28
+        // Its supports till android 9 & api 28
         if (androidExternalStoragePermission.isExternalStorageWritable) {
             getAllPathFile(File(externalDir))
         }
         if (Build.VERSION.SDK_INT >= 21 && androidSdCardPermission.isSdStorageWritable) {
             getAllPathFile(File(sdCardDir))
         }
+//
+        //        Here we remove Uninstall Pdf File from Data base
+        pdfRepository.removeUninstallAppFromDB()
+
     }
 
     private suspend fun getAllPathFile(directory: File) {
@@ -115,15 +120,24 @@ class ScanPdf(private var activity: Activity, private var pdfRepository: PdfRepo
         date: Long,
         size: Long
     ) {
-        pdfRepository.insert(
-            Pdf(
-                null,
-                name,
-                path,
-                date,
-                size
+
+        if (pdfRepository.isPresent(path) == 0)
+            pdfRepository.insert(
+                Pdf(
+                    null,
+                    name,
+                    path,
+                    date,
+                    size,
+                    true
+                )
             )
-        )
+        else
+            pdfRepository.setInstallValue(
+                path
+            )
+
+
     }
 
 }

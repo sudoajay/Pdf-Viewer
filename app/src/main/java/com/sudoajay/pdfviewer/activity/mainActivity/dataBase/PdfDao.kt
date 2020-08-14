@@ -24,6 +24,18 @@ interface PdfDao {
     fun searchItem(search: String?): DataSource.Factory<Int, Pdf>
 
 
+    @Query("UPDATE PdfTable SET Installed = '0'")
+    suspend fun setDefaultValueInstall()
+
+    @Query("SELECT Count(id) FROM PdfTable WHERE Path = :path ")
+    suspend fun isPresent(path: String): Int
+
+    @Query("UPDATE  PdfTable  SET Installed = '1'  WHERE id IN (SELECT id FROM ( select id from PdfTable where Path = :path  limit 0,1)l)")
+    suspend fun updateInstalledByPath(path: String)
+
+    @Query("SELECT id FROM PdfTable WHERE Installed = '0' ")
+    suspend fun getUninstallList(): List<Int>
+
 
     @Query("Select Count(*) FROM PdfTable ")
     suspend fun getCount(): Int
@@ -38,5 +50,7 @@ interface PdfDao {
     @Query("DELETE FROM PdfTable")
     suspend fun deleteAll()
 
+    @Query("DELETE FROM PdfTable Where id = :ID")
+    fun deleteRow(ID: Int)
 
 }

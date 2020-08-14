@@ -31,7 +31,7 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
 
     private var pdfDao: PdfDao =
-        PdfRoomDatabase.getDatabase(_application.applicationContext).appDao()
+        PdfRoomDatabase.getDatabase(_application.applicationContext).pdfDao()
     init {
 
 //        Creating Object and Initialization
@@ -50,28 +50,14 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
         filterChanges.value = filter
     }
     fun databaseConfiguration(activity: MainActivity) {
-        clearTheDatabaseCompletely()
         CoroutineScope(Dispatchers.IO).launch {
-            Log.e(TAG, pdfRepository.getCount().toString() + " --- After deltetion")
-            if (isEmpty())
                 pdfDatabaseConfiguration(activity)
-            Log.e(
-                TAG,
-                pdfRepository.getCount().toString() + " --- After pdfDatabaseConfiguration"
-            )
             hideProgress!!.postValue(false)
             filterChanges.postValue(_application.getString(R.string.filter_changes_text))
-
-
         }
 
     }
 
-    private fun clearTheDatabaseCompletely() {
-        CoroutineScope(Dispatchers.IO).launch {
-            pdfRepository.deleteAll()
-        }
-    }
 
     private suspend fun pdfDatabaseConfiguration(activity: MainActivity) {
         Log.e(TAG, " Scan The FIle")

@@ -48,12 +48,12 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var binding: ActivityMainBinding
     private lateinit var androidExternalStoragePermission: AndroidExternalStoragePermission
-    private lateinit var androidSdCardPermission: AndroidSdCardPermission
     private var isDarkTheme: Boolean = false
     private val requestCode = 100
     private var TAG = "MainActivityClass"
     private var doubleBackToExitPressedOnce = false
     private var pagingAppRecyclerAdapter: PagingAppRecyclerAdapter? = null
+    private lateinit var androidSdCardPermission:AndroidSdCardPermission
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,9 +115,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         }
         androidExternalStoragePermission =
             AndroidExternalStoragePermission(applicationContext, this)
-        //        Take Permission
-        androidSdCardPermission = AndroidSdCardPermission(applicationContext, this)
-
 
         if (!androidExternalStoragePermission.isExternalStorageWritable ||
             SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)
@@ -127,22 +124,14 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         } else {
             androidExternalStoragePermission.callPermission()
             Log.e(TAG, "Yes isExternalStorageWritable")
-            if (externalMemoryAvailable() && androidExternalStoragePermission.isExternalStorageWritable && !androidSdCardPermission.isSdStorageWritable) {
-                androidSdCardPermission.callPermission()
-            }
             callDataBaseConfig()
         }
-
-
 
 
         super.onResume()
     }
 
-    fun Context.externalMemoryAvailable(): Boolean {
-        val storage = ContextCompat.getExternalFilesDirs(this, null)
-        return storage.size > 1 && storage[0] != null && storage[1] != null
-    }
+
 
     override fun onPause() {
         Log.e(TAG, " Activity - onPause ")
@@ -207,7 +196,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     private fun setRecyclerView() {
 
-
+        //        Take Permission
+        androidSdCardPermission = AndroidSdCardPermission(applicationContext, this)
         val recyclerView = binding.recyclerView
         val divider = getInsetDivider()
         recyclerView.addItemDecoration(divider)
@@ -223,6 +213,12 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             }
 
 
+            if (externalMemoryAvailable() && SelectOptionBottomSheet.getValue(applicationContext) == getString(
+                    R.string.scan_file_text
+                ) && !androidSdCardPermission.isSdStorageWritable
+            ) pagingAppRecyclerAdapter!!.isSdCardPresent = true
+//
+            pagingAppRecyclerAdapter!!.totalSize = it.size
             pagingAppRecyclerAdapter!!.submitList(it)
             recyclerView.adapter = pagingAppRecyclerAdapter
 
@@ -230,7 +226,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                 binding.swipeRefresh.isRefreshing = false
 
             isDataEmpty(it.size)
-
 
         })
 
@@ -257,10 +252,16 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             .build()
     }
 
+    private fun Context.externalMemoryAvailable(): Boolean {
+        val storage = ContextCompat.getExternalFilesDirs(this, null)
+        return storage.size > 1 && storage[0] != null && storage[1] != null
+    }
+
     private fun callDataBaseConfig() = viewModel.databaseConfiguration(this)
 
+    fun callSdCardPermission() = androidSdCardPermission.callPermission()
 
-    private fun isDataEmpty(it:Int){
+    private fun isDataEmpty(it: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             if (it == 0 && viewModel.isEmpty() && SelectOptionBottomSheet.getValue(
                     applicationContext
@@ -377,11 +378,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                     AndroidExternalStoragePermission.getExternalPathFromCacheDir(applicationContext)
                         .toString()
                 )
-                Log.e("MainActivityViewModel", "calling onRequestPermissionsResult")
-                if (externalMemoryAvailable() && androidExternalStoragePermission.isExternalStorageWritable && !androidSdCardPermission.isSdStorageWritable) {
-                    androidSdCardPermission.callPermission()
-                }
-                callDataBaseConfig()
 
             }
 
@@ -611,6 +607,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             .setCancelable(true)
             .show()
     }
+
 
     private fun shareTheFile(file: File) {
         try {

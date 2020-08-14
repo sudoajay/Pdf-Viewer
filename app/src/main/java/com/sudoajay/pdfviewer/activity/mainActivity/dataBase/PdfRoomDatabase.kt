@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [Pdf::class], version = 1 , exportSchema = false)
 abstract class PdfRoomDatabase : RoomDatabase() {
 
-    abstract fun appDao(): PdfDao
+    abstract fun pdfDao(): PdfDao
 
 
 //  If You want to set default value then use that method
@@ -43,7 +43,7 @@ abstract class PdfRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     PdfRoomDatabase::class.java,
-                    "app_database"
+                    "pdf_database"
                 )
 
 //                    .addCallback(WordDatabaseCallback(scope))
