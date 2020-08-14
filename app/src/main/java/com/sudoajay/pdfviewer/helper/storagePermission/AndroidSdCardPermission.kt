@@ -14,7 +14,7 @@ class AndroidSdCardPermission(private var context: Context, private var activity
 
 
 
-    fun callThread() {
+    fun callPermission() {
         if (!isSdStorageWritable) {
             val handler = Handler()
             handler.postDelayed({

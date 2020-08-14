@@ -48,6 +48,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var binding: ActivityMainBinding
     private lateinit var androidExternalStoragePermission: AndroidExternalStoragePermission
+    private lateinit var androidSdCardPermission: AndroidSdCardPermission
     private var isDarkTheme: Boolean = false
     private val requestCode = 100
     private var TAG = "MainActivityClass"
@@ -115,6 +116,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         androidExternalStoragePermission =
             AndroidExternalStoragePermission(applicationContext, this)
         //        Take Permission
+        androidSdCardPermission = AndroidSdCardPermission(applicationContext, this)
+
 
         if (!androidExternalStoragePermission.isExternalStorageWritable ||
             SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)
@@ -124,12 +127,21 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         } else {
             androidExternalStoragePermission.callPermission()
             Log.e(TAG, "Yes isExternalStorageWritable")
+            if (externalMemoryAvailable() && androidExternalStoragePermission.isExternalStorageWritable && !androidSdCardPermission.isSdStorageWritable) {
+                androidSdCardPermission.callPermission()
+            }
             callDataBaseConfig()
         }
 
 
 
+
         super.onResume()
+    }
+
+    fun Context.externalMemoryAvailable(): Boolean {
+        val storage = ContextCompat.getExternalFilesDirs(this, null)
+        return storage.size > 1 && storage[0] != null && storage[1] != null
     }
 
     override fun onPause() {
@@ -250,8 +262,12 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     private fun isDataEmpty(it:Int){
         CoroutineScope(Dispatchers.Main).launch {
-            if(it == 0  && viewModel.isEmpty() &&  SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.scan_file_text))
-                CustomToast.toastIt(applicationContext,getString(R.string.empty_list_text))
+            if (it == 0 && viewModel.isEmpty() && SelectOptionBottomSheet.getValue(
+                    applicationContext
+                ) == getString(R.string.scan_file_text)
+                && androidExternalStoragePermission.isExternalStorageWritable
+            )
+                CustomToast.toastIt(applicationContext, getString(R.string.empty_list_text))
         }
     }
 
@@ -361,8 +377,10 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                     AndroidExternalStoragePermission.getExternalPathFromCacheDir(applicationContext)
                         .toString()
                 )
-                Log.e("MainActivityViewModel" , "calling onRequestPermissionsResult")
-
+                Log.e("MainActivityViewModel", "calling onRequestPermissionsResult")
+                if (externalMemoryAvailable() && androidExternalStoragePermission.isExternalStorageWritable && !androidSdCardPermission.isSdStorageWritable) {
+                    androidSdCardPermission.callPermission()
+                }
                 callDataBaseConfig()
 
             }
@@ -577,7 +595,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             .setMessage(applicationContext.getString(R.string.delete_message_text))
             .setPositiveButton("Yes"){ _, _ ->
                 if (path.isNotEmpty()) {
-                    if (path.startsWith("content:"))
+                    if (path.startsWith(AndroidSdCardPermission.getSdCardPath(applicationContext)) || Build.VERSION.SDK_INT >= 29)
                         DeleteFile.deleteUri(applicationContext, path)
                     else DeleteFile.delete(applicationContext, path)
                     CoroutineScope(Dispatchers.IO).launch {
