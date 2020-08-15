@@ -1,7 +1,6 @@
 package com.sudoajay.pdfviewer.activity.mainActivity
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,6 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
     PagedListAdapter<Pdf, PagingAppRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     var totalSize = 0
-    var isSdCardPresent = false
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val recyclerAdapter = if (viewType == VIEW_TYPE_CELL) {
             LayoutInflater.from(parent.context)
@@ -48,8 +46,8 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
     }
 
     @SuppressLint("SetTextI18n")
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        Log.e("PagingAppRecycler", "$position --- position total Size$totalSize")
         if (position < totalSize ) {
             val sdf = SimpleDateFormat(" , h:mm a , d MMM yyyy ", Locale.getDefault())
 
@@ -74,12 +72,13 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
 
     override fun getItemCount(): Int {
         //Header item, plus the extra row
-        return totalSize + if (isSdCardPresent) 1 else 0
+        return totalSize + if (mainActivity.isSdCardPresent()) 1 else 0
     }
 
     override fun getItemViewType(position: Int): Int {
         return if (position == totalSize) VIEW_TYPE_FOOTER else VIEW_TYPE_CELL
     }
+    private fun openPdfFile(pdfPath:String) = mainActivity.copyingPdfFile(pdfPath, null, true)
 
     companion object {
 
@@ -102,9 +101,5 @@ class PagingAppRecyclerAdapter(var mainActivity: MainActivity) :
 
         }
     }
-
-    private fun openPdfFile(pdfPath:String) = mainActivity.copyingPdfFile(pdfPath, null, true)
-
-
 
 }
