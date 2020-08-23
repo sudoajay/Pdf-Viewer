@@ -204,7 +204,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
 
         val recyclerView = binding.recyclerView
-        val divider = getInsetDivider()
+        val divider = getInsertDivider()
         recyclerView.addItemDecoration(divider)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -236,7 +236,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     }
 
-    private fun getInsetDivider(): RecyclerView.ItemDecoration {
+    private fun getInsertDivider(): RecyclerView.ItemDecoration {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
         val dividerColor = ContextCompat.getColor(
             applicationContext,
@@ -260,7 +260,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     fun callSdCardPermission() = androidSdCardPermission?.callPermission()
 
-    fun isSdCardPresent():Boolean = androidExternalStoragePermission?.isExternalStorageWritable!! && externalMemoryAvailable() &&
+    private fun isSdCardPresent():Boolean = androidExternalStoragePermission?.isExternalStorageWritable!! && externalMemoryAvailable() &&
             SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.scan_file_text) && !androidSdCardPermission?.isSdStorageWritable!!
 
     private fun isDataEmpty(it: Int) {

@@ -15,6 +15,7 @@ import com.sudoajay.pdfviewer.activity.mainActivity.MainActivity
 import com.sudoajay.pdfviewer.activity.sendFeedback.SendFeedback
 import com.sudoajay.pdfviewer.helper.DarkModeBottomSheet
 import com.sudoajay.pdfviewer.helper.DeleteCache
+import java.util.*
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -188,7 +189,13 @@ class SettingsActivity : AppCompatActivity() {
         companion object {
             fun getLanguage(context: Context): String {
                 return PreferenceManager
-                    .getDefaultSharedPreferences(context).getString("changeLanguage", "en").toString()
+                    .getDefaultSharedPreferences(context).getString("changeLanguage", setLanguage(context)).toString()
+            }
+
+            private fun setLanguage(context: Context): String {
+                val lang = Locale.getDefault().language
+                val array = context.resources.getStringArray(R.array.languagesValues)
+                return if (lang in array) lang else "en"
             }
         }
     }

@@ -8,7 +8,7 @@
 
         <ListPreference
             android:defaultValue="en"
-            android:entries="@array/LanguageList"
+            android:entries="@array/languageList"
             android:entryValues="@array/languagesValues"
             android:key="changeLanguage"
             android:title="@string/change_language_text" />
