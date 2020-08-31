@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/dark_mode_text"
+            android:text="@string/dark_mode_trans_text"
             android:textColor="?attr/headingNormalTextColor"
             android:textSize="18sp"
             android:textStyle="bold"

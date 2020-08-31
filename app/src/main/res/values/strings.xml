@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Pdf Viewer</string>
-    <string name="developer_name">Created by Abhishek &amp; Rishab</string>
+    <string name="developer_name">Created by Sudo Ajay</string>
 
     <!--    Dark Mode Bottom Sheet-->
+    <string name="dark_mode_trans_text">Dark Mode</string>
     <string name="off_trans_text">Off</string>
     <string name="on_trans_text">On</string>
     <string name="automatic_at_sunset_trans_text">Automatic at sunset</string>
