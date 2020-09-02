@@ -712,7 +712,10 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         }
         doubleBackToExitPressedOnce = true
         CustomToast.toastIt(applicationContext, "Click Back Again To Exit")
-        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(2000L)
+            doubleBackToExitPressedOnce = false
+        }
     }
 
     private fun closeApp() {

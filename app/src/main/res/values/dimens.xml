@@ -22,4 +22,7 @@
     <dimen name="image_dimension">40dp</dimen>
 
 
+
+    <!--    Splash Screen-->
+    <dimen name="image_header_dimen">100dp</dimen>
 </resources>

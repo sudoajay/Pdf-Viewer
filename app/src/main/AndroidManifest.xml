@@ -16,22 +16,22 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.mainActivity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.splashScreen.Splash"
+            android:theme="@style/splashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.BaseActivity" />
+        <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".activity.mainActivity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.settingActivity.SettingsActivity"
             android:label="@string/title_activity_settings"
