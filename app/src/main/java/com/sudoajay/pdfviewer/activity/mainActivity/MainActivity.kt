@@ -14,7 +14,7 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
+import android.os.StrictMode
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.*
@@ -72,6 +72,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+
+        handleIntentFilter(intent)
 
         if (!intent.action.isNullOrEmpty() && intent.action.toString() == settingId) {
             openMoreSetting()
@@ -211,7 +213,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
         pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(this)
         recyclerView.adapter = pagingAppRecyclerAdapter
-        viewModel.appList!!.observe(this, androidx.lifecycle.Observer {
+        viewModel.appList!!.observe(this, {
 
             for (x in it) {
                 Log.e(TAG, x.name)
@@ -698,6 +700,16 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         //set menu item click listener here
         popup.setOnMenuItemClickListener(MyMenuItemClickListener(this, path))
         popup.show()
+    }
+
+    private fun handleIntentFilter(intent: Intent) { //Kinda not recommended by google but whatever
+        val builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+        val appLinkData = intent.data
+        val appLinkAction = intent.action
+        if (Intent.ACTION_VIEW == appLinkAction && appLinkData != null) {
+            copyingPdfFile(null, appLinkData, true)
+        }
     }
 
 
