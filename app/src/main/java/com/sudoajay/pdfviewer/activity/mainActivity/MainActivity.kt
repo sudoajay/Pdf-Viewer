@@ -87,21 +87,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
         androidSdCardPermission = AndroidSdCardPermission(applicationContext, this)
 
-//        FirebaseInstanceId.getInstance().instanceId
-//            .addOnCompleteListener(OnCompleteListener { task ->
-//                if (!task.isSuccessful) {
-//                    Log.w(TAG, "getInstanceId failed", task.exception)
-//                    return@OnCompleteListener
-//                }
-//
-//                // Get new Instance ID token
-//                val token = task.result?.token
-//
-//                // Log and toast
-//                val msg = getString(R.string.msg_token_fmt, token)
-//                Log.d(TAG, msg)
-//                CustomToast.toastIt(applicationContext, msg)
-//            })
 
 
     }
@@ -191,6 +176,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                     if (isDarkTheme) R.color.navigationIconDarkColor else R.color.navigationIconColor
                 )
             )
+
             binding.bottomAppBar.navigationIcon = it
         }
 
@@ -495,7 +481,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                 }
                 if (uri != null) {
                     val cache: String = cacheDir.absolutePath
-                    val fileName: String = queryName(contentResolver, fileUri)
+                    var fileName: String? = queryName(contentResolver, fileUri)
+                    if (fileName == null) fileName = "pdf"
                     dst = File(
                         """$cache/$fileName"""
                     )
@@ -663,7 +650,10 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         // Set your required file type
         intent.type = "application/pdf"
-        intent.action = Intent.ACTION_GET_CONTENT
+        intent.action =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                Intent.ACTION_OPEN_DOCUMENT
+            else Intent.ACTION_GET_CONTENT
         startActivityForResult(
             Intent.createChooser(
                 intent,
@@ -679,13 +669,19 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
 
     @SuppressLint("Recycle")
-    private fun queryName(resolver: ContentResolver, uri: Uri?): String {
-        val returnCursor = resolver.query(uri!!, null, null, null, null)!!
-        val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-        returnCursor.moveToFirst()
-        val name = returnCursor.getString(nameIndex)
-        returnCursor.close()
-        return name
+    private fun queryName(resolver: ContentResolver, uri: Uri?): String? {
+        try {
+
+
+            val returnCursor = resolver.query(uri!!, null, null, null, null)!!
+            val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            returnCursor.moveToFirst()
+            val name = returnCursor.getString(nameIndex)
+            returnCursor.close()
+            return name
+        } catch (ex: Exception) {
+            return "Pdf"
+        }
     }
 
 
