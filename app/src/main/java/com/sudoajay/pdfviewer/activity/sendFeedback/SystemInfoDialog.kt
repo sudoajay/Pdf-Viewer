@@ -3,16 +3,13 @@ package com.sudoajay.pdfviewer.activity.sendFeedback
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.hardware.display.DisplayManager
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.sudoajay.pdfviewer.R
-import com.sudoajay.pdfviewer.activity.sendFeedback.SystemInfo
 import com.sudoajay.pdfviewer.databinding.LayoutSystemInfoBinding
 import com.sudoajay.pdfviewer.helper.ConnectivityType
 import com.sudoajay.pdfviewer.helper.FileSize

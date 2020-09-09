@@ -10,7 +10,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.pdfviewer.BuildConfig
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.sendFeedback.SendFeedback
-import com.sudoajay.pdfviewer.activity.showPdfViewer.ShowPdfViewer
 import com.sudoajay.pdfviewer.databinding.LayoutNavigationDrawerBottomSheetBinding
 
 

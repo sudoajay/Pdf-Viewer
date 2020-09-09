@@ -11,25 +11,6 @@ abstract class PdfRoomDatabase : RoomDatabase() {
     abstract fun pdfDao(): PdfDao
 
 
-//  If You want to set default value then use that method
-
-//    private class WordDatabaseCallback(
-//        private val scope: CoroutineScope
-//    ) : RoomDatabase.Callback() {
-//
-//        override fun onOpen(db: SupportSQLiteDatabase) {
-//            super.onOpen(db)
-//            INSTANCE?.let { database ->
-//                scope.launch {
-//                    val wordDao = database.wordDao()
-//
-//                    // Delete all content here.
-//                    wordDao.deleteAll()
-//                }
-//            }
-//        }
-//    }
-
     companion object {
         @Volatile
         private var INSTANCE: PdfRoomDatabase? = null
@@ -46,7 +27,6 @@ abstract class PdfRoomDatabase : RoomDatabase() {
                     "pdf_database"
                 )
 
-//                    .addCallback(WordDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance

@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.activity.BaseActivity
-import com.sudoajay.pdfviewer.activity.mainActivity.MainActivity
 import com.sudoajay.pdfviewer.databinding.ActivityShowPdfViewerBinding
 import com.sudoajay.pdfviewer.helper.CustomToast
 import java.io.File

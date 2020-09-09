@@ -2,7 +2,6 @@ package com.sudoajay.pdfviewer.helper
 
 import android.content.Context
 import android.net.Uri
-import com.sudoajay.pdfviewer.BuildConfig
 import java.io.*
 
 object CopyFile {

@@ -2,7 +2,6 @@ package com.sudoajay.pdfviewer.helper
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 import com.sudoajay.pdfviewer.R
 import com.sudoajay.pdfviewer.helper.storagePermission.AndroidExternalStoragePermission

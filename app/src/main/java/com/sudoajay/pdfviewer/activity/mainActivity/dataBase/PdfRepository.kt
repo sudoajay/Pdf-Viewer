@@ -82,9 +82,5 @@ class PdfRepository(private val context: Context, private val pdfDao: PdfDao) {
         pdfDao.deleteRowFromPath(path)
     }
 
-    suspend fun deleteAll(){
-        pdfDao.deleteAll()
-    }
-
 
 }

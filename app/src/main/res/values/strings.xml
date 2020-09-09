@@ -154,9 +154,9 @@
     <string name="about_app_summary_text">open github link</string>
 
 <!--    notification tile -->
-    <string name="open_close_pdf_text">Open / Close Pdf</string>
-    <string name="open_pdf_file_text">Open PDF File</string>
-    <string name="close_pdf_file_text">Close PDF File</string>
+    <string name="open_close_pdf_text">Open Recent Pdf</string>
+    <string name="open_pdf_file_text">Open Recent PDF </string>
+    <string name="close_pdf_file_text">Close Recent PDF</string>
     <string name="added_text">added </string>
     <string name="removed_text">removed </string>
     <string name="error_no_recent_pdf_file">You did not open any pdf file recently</string>

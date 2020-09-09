@@ -51,7 +51,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     private  var androidSdCardPermission:AndroidSdCardPermission? = null
     private var isDarkTheme: Boolean = false
     private val requestCode = 100
-    private var TAG = "MainActivityClass"
     private var doubleBackToExitPressedOnce = false
     private var pagingAppRecyclerAdapter: PagingAppRecyclerAdapter? = null
 
@@ -91,10 +90,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     }
 
-    override fun onStart() {
-        Log.e(TAG, " Activity - onStart ")
-        super.onStart()
-    }
 
     override fun onResume() {
 
@@ -115,10 +110,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
             SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)
         ) {
             showSelectOption()
-            Log.e(TAG, "No isExternalStorageWritable")
         } else {
             androidExternalStoragePermission?.callPermission()
-            Log.e(TAG, "Yes isExternalStorageWritable")
             callDataBaseConfig()
         }
 
@@ -127,30 +120,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     }
 
 
-
-    override fun onPause() {
-        Log.e(TAG, " Activity - onPause ")
-
-        super.onPause()
-    }
-
-
-    override fun onStop() {
-        Log.e(TAG, " Activity - onStop ")
-
-        super.onStop()
-    }
-    override fun onRestart() {
-        Log.e(TAG, " Activity - onRestart ")
-
-        super.onRestart()
-    }
-
-
     override fun onDestroy() {
-        Log.e(TAG, " Activity - onDestroy ")
         pagingAppRecyclerAdapter?.submitList(null)
-
         super.onDestroy()
     }
     private fun setReference() {
@@ -202,10 +173,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(this)
         recyclerView.adapter = pagingAppRecyclerAdapter
         viewModel.appList!!.observe(this, {
-
-            for (x in it) {
-                Log.e(TAG, x.name)
-            }
 
             pagingAppRecyclerAdapter!!.totalSize = it.size
             pagingAppRecyclerAdapter!!.submitList(it)
@@ -391,7 +358,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 //        Here I get OpenManage File
         if (this.requestCode == requestCode && data != null) {
             copyingPdfFile(null, data.data, true)
-            Log.e(TAG, data.data.toString() + " Get File Uri - ")
             return
         } else if (requestCode == 42 || requestCode == 58) {
             val sdCardURL: Uri? = data!!.data
@@ -487,7 +453,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
                     dst = File(
                         """$cache/$fileName"""
                     )
-                    Log.e(TAG, "File Dest " + dst.absolutePath.toString())
 
                     if (dst.exists()) dst.delete()
 
@@ -607,7 +572,6 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         try {
             val filename = file.name
             val fileLocation = File(cacheDir, filename)
-            Log.e(TAG, fileLocation.absolutePath)
             val path = FileProvider.getUriForFile(
                 this,
                 this.applicationContext.packageName + ".provider",
@@ -635,10 +599,8 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
     override fun handleDialogClose(value: String) {
         if (value == getString(R.string.select_option_text)) {
             if (SelectOptionBottomSheet.getValue(applicationContext) == getString(R.string.select_file_text)) {
-                Log.e(TAG, "select_file_text Option Click")
                 openFilePicker()
             } else {
-                Log.e(TAG, "scan_file_text Option Click")
                 androidExternalStoragePermission?.callPermission()
             }
         } else {
@@ -652,9 +614,7 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
         // Set your required file type
         intent.type = "application/pdf"
         intent.action =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                Intent.ACTION_OPEN_DOCUMENT
-            else Intent.ACTION_GET_CONTENT
+            Intent.ACTION_OPEN_DOCUMENT
         startActivityForResult(
             Intent.createChooser(
                 intent,
@@ -671,17 +631,15 @@ class MainActivity : BaseActivity(), SelectOptionBottomSheet.IsSelectedBottomShe
 
     @SuppressLint("Recycle")
     private fun queryName(resolver: ContentResolver, uri: Uri?): String? {
-        try {
-
-
+        return try {
             val returnCursor = resolver.query(uri!!, null, null, null, null)!!
             val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
             returnCursor.moveToFirst()
             val name = returnCursor.getString(nameIndex)
             returnCursor.close()
-            return name
+            name
         } catch (ex: Exception) {
-            return "Pdf"
+            "Pdf"
         }
     }
 

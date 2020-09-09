@@ -8,7 +8,6 @@ import com.sudoajay.pdfviewer.R
 
 class MyMenuItemClickListener
 /**
- * @param position
  */(var mainActivity: MainActivity, var path: String) :
     PopupMenu.OnMenuItemClickListener {
 

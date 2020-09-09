@@ -3,7 +3,6 @@ package com.sudoajay.pdfviewer.helper
 import android.app.Activity
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.Pdf
 import com.sudoajay.pdfviewer.activity.mainActivity.dataBase.PdfRepository

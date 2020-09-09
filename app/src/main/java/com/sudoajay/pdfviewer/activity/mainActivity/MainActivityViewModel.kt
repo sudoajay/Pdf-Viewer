@@ -2,7 +2,6 @@ package com.sudoajay.pdfviewer.activity.mainActivity
 
 import android.app.Application
 import android.os.Build
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,7 +21,6 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
 
     var appList: LiveData<PagedList<Pdf>>? = null
-    var TAG = "MainActivityViewModel"
     private var _application = application
     var pdfRepository: PdfRepository
 
@@ -60,7 +58,6 @@ class MainActivityViewModel (application: Application) : AndroidViewModel(applic
 
 
     private suspend fun pdfDatabaseConfiguration(activity: MainActivity) {
-        Log.e(TAG, " Scan The FIle")
         val scanPdf = ScanPdf(activity, pdfRepository)
         //             Its supports till android 9 & api 28
         if (Build.VERSION.SDK_INT <= 28) {

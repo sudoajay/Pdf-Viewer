@@ -4,10 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Handler
 import android.widget.Toast
-import com.sudoajay.pdfviewer.helper.CustomToast
 import com.sudoajay.pdfviewer.R
+import com.sudoajay.pdfviewer.helper.CustomToast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 
 class AndroidSdCardPermission(private var context: Context, private var activity: Activity?) {
@@ -16,8 +19,8 @@ class AndroidSdCardPermission(private var context: Context, private var activity
 
     fun callPermission() {
         if (!isSdStorageWritable) {
-            val handler = Handler()
-            handler.postDelayed({
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(500)
                 // Its Support from Lollipop
                 if (Build.VERSION.SDK_INT >= 21) {
                     CustomToast.toastIt(context, context.getString(R.string.selectSdCardMes))
@@ -25,7 +28,8 @@ class AndroidSdCardPermission(private var context: Context, private var activity
                 } else {
                     CustomToast.toastIt(context, context.getString(R.string.supportAboveSdCard))
                 }
-            }, 500)
+
+            }
         }
     }
 
