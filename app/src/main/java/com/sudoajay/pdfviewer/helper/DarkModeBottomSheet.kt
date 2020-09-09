@@ -13,7 +13,7 @@ import com.sudoajay.pdfviewer.activity.mainActivity.MainActivity
 import com.sudoajay.pdfviewer.databinding.LayoutDarkModeBottomSheetBinding
 
 
-class DarkModeBottomSheet(var passAction: String) : BottomSheetDialogFragment() {
+class DarkModeBottomSheet(private var passAction: String) : BottomSheetDialogFragment() {
 
 
     override fun onCreateView(

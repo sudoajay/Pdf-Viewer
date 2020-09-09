@@ -16,7 +16,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.provider.OpenableColumns
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi

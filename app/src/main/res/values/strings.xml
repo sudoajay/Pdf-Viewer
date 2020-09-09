@@ -12,7 +12,6 @@
 
     <!--  MainActivity  Bottom Toolbar-->
     <string name="action_search">Search</string>
-    <string name="action_more_option">More Option</string>
 
     <!-- callPermissionDialog (External Storage Permission)-->
     <string name="activity_custom_dialog_permission_TextView1">App Permission</string>
@@ -134,20 +133,9 @@
     <string name="shareMessage">Hey, check This App which helps you to Delete Duplicate and Unnecessary Data from the phone -</string>
 
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
     <string name="share_app_summary_text">share the play store app link</string>
     <string name="rate_use_summary_text">express your experience through rating</string>
     <string name="more_app_summary_text">there is more app out there</string>
@@ -169,12 +157,9 @@
 <!--    Notification channel-->
     <string name="notifications_group_service">Service control</string>
     <string name="firebase_channel_id" translatable="false">Push Notification</string>
-    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 
 <!--    scan sd card-->
     <string name="scan_sd_card_text">Detect Sd Card</string>
-    <string name="confirm_sd_card_permission_title_text">Detected Sd Card !!</string>
-    <string name="sd_card_permission_text">Select Sd Card storage For further Scanning Process</string>
 
 
     <!--        No Trans-->
@@ -216,11 +201,6 @@
     <string name="pdf_path_1_text" translatable="false">Pdf Path 1</string>
     <string name="pdf_path_2_text" translatable="false">Pdf Path 2</string>
     <string name="pdf_path_3_text" translatable="false">Pdf Path 3</string>
-
-
-<!--    sd card first time detect-->
-    <string name="first_time_sd_card_detect" translatable="false">isFirstTimeSdCardDetect</string>
-
 
 
 </resources>

@@ -332,7 +332,7 @@ class ShowPdfViewer : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     private fun shortcutManager() {
 
-        val shortcutManager = getSystemService<ShortcutManager>(ShortcutManager::class.java)
+        val shortcutManager = getSystemService(ShortcutManager::class.java)
 
         val pdfList = getPdfPathFromShared(applicationContext)
         val listShortcutInfo: MutableList<ShortcutInfo> = mutableListOf()
