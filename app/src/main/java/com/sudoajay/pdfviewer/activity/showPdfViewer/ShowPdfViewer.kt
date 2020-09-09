@@ -45,7 +45,9 @@ class ShowPdfViewer : AppCompatActivity() {
         isDarkTheme = BaseActivity.isDarkMode(applicationContext)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!isDarkTheme )
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) window.setDecorFitsSystemWindows(
+                    false
+                ) else window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         setContentView(R.layout.activity_show_pdf_viewer)
 
@@ -126,6 +128,9 @@ class ShowPdfViewer : AppCompatActivity() {
         settings.setAppCacheEnabled(true)
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
+        settings.builtInZoomControls = true
+        settings.displayZoomControls = false
+        settings.setSupportZoom(true)
         binding.myWebView.webViewClient = CustomWebViewClient()
         binding.myWebView.webChromeClient = CustomWebChromeClient()
         binding.myWebView.loadUrl(url)

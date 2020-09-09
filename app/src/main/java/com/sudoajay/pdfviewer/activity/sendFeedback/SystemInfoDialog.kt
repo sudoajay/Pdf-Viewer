@@ -3,6 +3,7 @@ package com.sudoajay.pdfviewer.activity.sendFeedback
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.hardware.display.DisplayManager
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -74,8 +75,7 @@ class SystemInfoDialog : DialogFragment() {
 
     private fun forceWrapContent(v: View?) { // Start with the provided view
         var current = v
-        val dm = DisplayMetrics()
-        requireActivity().windowManager.defaultDisplay.getMetrics(dm)
+        val dm = requireContext().resources.displayMetrics
         val width = dm.widthPixels
         // Travel up the tree until fail, modifying the LayoutParams
         do { // Get the parent
