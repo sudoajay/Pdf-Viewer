@@ -122,10 +122,7 @@ class ShowPdfViewer : AppCompatActivity() {
         settings.allowUniversalAccessFromFileURLs = true
         settings.domStorageEnabled = true
         settings.domStorageEnabled = true
-        val appCachePath = applicationContext.cacheDir.absolutePath
-        settings.setAppCachePath(appCachePath)
         settings.allowFileAccess = true
-        settings.setAppCacheEnabled(true)
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
         settings.builtInZoomControls = true
